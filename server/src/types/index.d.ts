@@ -73,17 +73,19 @@ interface Token extends DatabaseItem {
 }
 type TokenReference = string | TokenRating;
 
-interface User extends DatabaseItem {
+interface PublicUser extends DatabaseItem {
   name: string;
   username: string;
-  password: string;
   started: Date;
   height: number;
   span: number;
   weight: number;
   created?: Date;
-  updated?: Date;
+}
+interface User extends PublicUser {
+  password: string;
   admin?: boolean;
+  updated?: Date;
 }
 type UserReference = string | UserRating;
 

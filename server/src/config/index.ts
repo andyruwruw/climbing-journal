@@ -37,3 +37,14 @@ export const generateEmptyMaxSends = (): MaxSends => ({
   mixed: null,
   ice: null,
 });
+
+/**
+ * Salting rounds.
+ */
+export const SALT_WORK_FACTOR = 12;
+
+/**
+ * Name of the login cookie.
+ */
+export const COOKIE_NAME = 'climbingjournalcookie';
+

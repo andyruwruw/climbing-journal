@@ -48,26 +48,6 @@ export const MESSAGE_HANDLER_PARAMETER_MISSING = (
 ) => `${parameter} for ${item} not provided`;
 
 /**
- * Error message thrown when images object is malformed.
- */
-export const MESSAGE_MALFORMED_IMAGE_OBJECTS_ERROR = 'The images must be an array of objects';
-
-/**
- * Error message thrown when objects inside images array are malformed.
- */
-export const MESSAGE_MISSING_URL_IN_IMAGE_OBJECTS_ERROR = 'Each image object must contain a url property';
-
-/**
- * Error message thrown when objects inside images array are malformed.
- */
-export const MESSAGE_IMAGE_REQUIRED_ERROR = 'A single image is required';
-
-/**
- * Error message thrown when links object is malformed.
- */
-export const MESSAGE_MALFORMED_LINKS_OBJECT_ERROR = 'Links must be an object of destination and url properties';
-
-/**
  * Error message thrown when a duplicate entry is attempted to be created.
  *
  * @param {string} item Item attempted to be created.
@@ -162,3 +142,13 @@ export const MESSAGE_HANDLER_INVALID_PARAMETER_TYPE = (
   parameter: string,
   type: string,
 ) => `Parameter ${parameter} should be a ${type}`;
+
+/**
+ * Message when username or password are incorrect.
+ */
+export const MESSAGE_LOGIN_FAILURE = 'Username or password doesn\'t match.';
+
+/**
+ * Message when token isn't found to be deleted upon logout.
+ */
+export const MESSAGE_LOGOUT_FAILURE = 'Session not found.';
