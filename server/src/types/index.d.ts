@@ -22,7 +22,7 @@ type LocationRatingReference = string | LocationRating;
 
 interface Location extends DatabaseItem {
   name: string;
-  location: string;
+  locale: string;
   address: string;
   outdoors: boolean;
   image: string;
@@ -81,6 +81,7 @@ interface PublicUser extends DatabaseItem {
   span: number;
   weight: number;
   created?: Date;
+  image: string;
 }
 interface User extends PublicUser {
   password: string;

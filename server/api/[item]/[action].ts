@@ -34,10 +34,13 @@ export default async function (
     res,
   );
 
+  // Instantiate handler.
+  const handler = await (new ROUTES[item as string][action as string]());
+
   /**
    * Execute function.
    */
-  await ROUTES[item as string][action as string].execute(
+  await handler.execute(
     req,
     res,
   );

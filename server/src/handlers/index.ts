@@ -15,4 +15,4 @@ export default {
   location: LocationHandlers,
   session: SessionHandlers,
   user: UserHandlers,
-} as Record<string, Record<string, Handler>>;
+} as Record<string, Record<string, typeof Handler>>;

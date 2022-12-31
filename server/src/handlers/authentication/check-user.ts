@@ -1,6 +1,6 @@
 // Local Imports
 import { Handler } from '../handler';
-import { validate } from '../../helpers/authentication';
+import { convertUserToPublic, validate } from '../../helpers/authentication';
 
 // Types
 import {
@@ -37,7 +37,7 @@ export class CheckUserHandler extends Handler {
       }
 
       res.status(200).send({
-        user,
+        user: convertUserToPublic(user),
       });
     } catch (error) {
       console.log(error);

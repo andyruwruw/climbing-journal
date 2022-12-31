@@ -1,17 +1,12 @@
 // Local Imports
 import {
-  checkExists,
-  validateImages,
-  validateLinks,
-} from '../../helpers/parameters';
-import {
   MESSAGE_CREATE_HANDLER_DUPLICATE_ENTRY_ERROR,
-  MESSAGE_CREATE_HANDLER_FAIL,
-  MESSAGE_CREATE_HANDLER_PARAMETER_MISSING,
+  MESSAGE_HANDLER_PARAMETER_MISSING,
   MESSAGE_INTERNAL_SERVER_ERROR,
+  MESSAGE_UNAUTHORIZED,
 } from '../../config/messages';
-import { Handler as AbstractHandler } from '../handler';
-import { Monitor } from '../../helpers/monitor';
+import { validate } from '../../helpers/authentication';
+import { Handler } from '../handler';
 
 // Types
 import {
@@ -20,14 +15,14 @@ import {
 } from '../../types';
 
 /**
- * Creates a new location.
+ * Handler for creating a new location.
  */
-export class CreateLocationHandler extends AbstractHandler {
+export class CreateLocationHandler extends Handler {
   /**
-   * Handles the request.
+   * Executes the handler.
    *
-   * @param {ClimbingRequest} req Incoming request.
-   * @param {ClimbingResponse} res Outgoing response.
+   * @param {ClimbingRequest} req Request for handler.
+   * @param {ClimbingResponse} res Response to request.
    */
   async execute(
     req: ClimbingRequest,
@@ -36,83 +31,64 @@ export class CreateLocationHandler extends AbstractHandler {
     try {
       const {
         name,
-        symbol,
-        images = [] as string[],
-        links = {} as Record<string, string>,
+        locale = '',
+        address = '',
+        outdoors = false,
+        image = '',
       } = req.body;
 
       // Are the required fields provided?
       if (!name) {
         return res.status(400).send({
-          error: MESSAGE_CREATE_HANDLER_PARAMETER_MISSING('blockchain', 'name'),
-        });
-      }
-      if (!symbol) {
-        return res.status(400).send({
-          error: MESSAGE_CREATE_HANDLER_PARAMETER_MISSING('blockchain', 'symbol'),
+          error: MESSAGE_HANDLER_PARAMETER_MISSING('location', 'name'),
         });
       }
 
-      // Are the images valid?
-      const validatedImagesResult = validateImages(images);
-      if (validatedImagesResult.length) {
-        return res.status(400).send({
-          error: validatedImagesResult,
-        });
-      }
-
-      // Are the links valid?
-      const validatedLinksResult = validateLinks(links);
-      if (validatedLinksResult.length) {
-        return res.status(400).send({
-          error: validatedLinksResult,
-        });
-      }
-
-      // Does the blockchain already exist?
-      if (await checkExists(AbstractHandler.database.blockchain, {
-        name,
-      })) {
-        return res.status(400).send({
-          error: MESSAGE_CREATE_HANDLER_DUPLICATE_ENTRY_ERROR('Blockchain', 'name', name),
-        });
-      }
-
-      // Create the new blockchain.
-      const blockchain = await AbstractHandler.database.blockchain.create(
-        name,
-        symbol,
-        images,
-        links,
+      const user = await validate(
+        req,
+        Handler.database,
       );
 
-      if (!blockchain) {
-        Monitor.trace(
-          CreateLocationHandler,
-          MESSAGE_CREATE_HANDLER_FAIL('blockchain'),
-          Monitor.Layer.WARNING,
-        );
+      if (!user) {
+        res.status(400).send({
+          error: MESSAGE_UNAUTHORIZED,
+        });
+        return;
+      }
 
-        return res.status(500).send({
+      const existing = await Handler.database.location.findOne({ name });
+
+      if (existing) {
+        res.status(400).send({
+          error: MESSAGE_CREATE_HANDLER_DUPLICATE_ENTRY_ERROR('location', 'name', name),
+        });
+        return;
+      }
+
+      const location = await Handler.database.location.create(
+        name,
+        locale,
+        address,
+        outdoors,
+        image,
+      );
+
+      if (!location) {
+        res.status(500).send({
           error: MESSAGE_INTERNAL_SERVER_ERROR,
         });
+        return;
       }
 
-      return res.status(201).send({
-        blockchain,
+      res.status(200).send({
+        location,
       });
     } catch (error) {
-      Monitor.trace(
-        CreateLocationHandler,
-        error,
-        Monitor.Layer.WARNING,
-      );
+      console.log(error);
 
-      return res.status(500).send({
+      res.status(500).send({
         error: MESSAGE_INTERNAL_SERVER_ERROR,
       });
     }
   }
 }
-
-export default new CreateLocationHandler();

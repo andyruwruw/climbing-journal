@@ -8,7 +8,7 @@ import {
   MESSAGE_INTERNAL_SERVER_ERROR,
   MESSAGE_LOGIN_FAILURE,
 } from '../../config/messages';
-import { comparePassword } from '../../helpers/authentication';
+import { comparePassword, convertUserToPublic } from '../../helpers/authentication';
 import { Handler } from '../handler';
 
 // Types
@@ -93,7 +93,7 @@ export class LoginHandler extends Handler {
       );
 
       res.status(200).send({
-        user,
+        user: convertUserToPublic(user),
       });
     } catch (error) {
       console.log(error);

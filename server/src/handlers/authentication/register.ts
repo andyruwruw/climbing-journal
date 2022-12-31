@@ -18,9 +18,9 @@ import {
 } from '../../types';
 
 /**
- * Handler for logging a user in.
+ * Handler for registering a new user.
  */
-export class LoginHandler extends Handler {
+export class RegisterHandler extends Handler {
   /**
    * Executes the handler.
    *
@@ -40,6 +40,7 @@ export class LoginHandler extends Handler {
         height = -1,
         span = 100,
         weight = -1,
+        image = ''
       } = req.body;
 
       // Are the required fields provided?
@@ -78,6 +79,7 @@ export class LoginHandler extends Handler {
         height,
         span,
         weight,
+        image,
       );
 
       if (!user) {

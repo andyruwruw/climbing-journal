@@ -27,6 +27,7 @@ export class User
    * @param {number} height The height of the user.
    * @param {number} span The span of the user.
    * @param {number} weight The weight of the user.
+   * @param {string} image URL to user image.
    * @returns {UserInterface} The user created.
    */
   async create(
@@ -34,9 +35,10 @@ export class User
     username: string,
     password: string,
     started: Date,
-    height: number = -1,
-    span: number = -100,
-    weight: number = -1,
+    height = -1,
+    span = -100,
+    weight = -1,
+    image = '',
   ): Promise<UserInterface> {
     return this._create({
       name,
@@ -46,6 +48,7 @@ export class User
       height,
       weight,
       span,
+      image,
     });
   }
 

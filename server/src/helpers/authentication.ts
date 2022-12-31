@@ -53,12 +53,12 @@ export const comparePassword = async (
  *
  * @param {ClimbingRequest} req Incoming request.
  * @param {Database} database Database instance.
- * @returns {Promise<PublicUser | null>} User if valid, null otherwise.
+ * @returns {Promise<User | null>} User if valid, null otherwise.
  */
 export const validate = async (
   req: ClimbingRequest,
   database: Database,
-): Promise<PublicUser | null> => {
+): Promise<User | null> => {
   const cookie = getCookie(req);
 
   if (!cookie || cookie === '') {
@@ -82,9 +82,7 @@ export const validate = async (
     return null;
   }
 
-  const user = await database.user.findById(id);
-
-  return convertUserToPublic(user);
+  return await database.user.findById(id);
 };
 
 /**
@@ -106,5 +104,6 @@ export const convertUserToPublic = (user: User | null): PublicUser | null => {
     span: user.span,
     weight: user.weight,
     created: user.created,
+    image: user.image,
   };
 };

@@ -8,12 +8,12 @@ import {
   ClimbingResponse,
 } from '../../types';
 import { attatchCookie, getCookie } from '../../helpers/cookie';
-import { MESSAGE_LOGOUT_FAILURE } from '../../config/messages';
+import { MESSAGE_INTERNAL_SERVER_ERROR, MESSAGE_LOGOUT_FAILURE } from '../../config/messages';
 
 /**
- * Handler for checking if the user is already logged in.
+ * Handler for logging a user out.
  */
-export class CheckUserHandler extends Handler {
+export class LogoutHandler extends Handler {
   /**
    * Executes the handler.
    *
@@ -55,7 +55,7 @@ export class CheckUserHandler extends Handler {
       console.log(error);
 
       res.status(500).send({
-        error: 'Internal Server Error',
+        error: MESSAGE_INTERNAL_SERVER_ERROR,
       });
     }
   }

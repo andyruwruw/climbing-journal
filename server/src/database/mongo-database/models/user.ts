@@ -33,6 +33,10 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
+  image: {
+    type: String,
+    default: '',
+  },
 });
 
 export const UserModel = model('User', schema);

@@ -127,9 +127,9 @@ export const MESSAGE_DEPENDENCY_LIMIT_REACHED = (
 ) => `More than ${limit} dependent ${item} is not supported`;
 
 /**
- * Error message thrown when an invalid address is provided.
+ * Error message thrown when invalid authorization token is provided.
  */
-export const MESSAGE_INVALID_ADDRESS = 'Address is an invalid value. Value must be a hexidecimal number.';
+export const MESSAGE_UNAUTHORIZED = 'User is not authorized to make this request.';
 
 /**
  * Generic error message thrown when a parameter is of an invalid type.
