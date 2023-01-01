@@ -8,10 +8,10 @@ import { GetLocationRatingsHandler } from './get-location-ratings';
 import { RateLocationHandler } from './rate-location';
 
 export default {
-  'create': CreateLocationHandler,
-  'delete': DeleteLocationHandler,
-  'edit': EditLocationHandler,
+  create: CreateLocationHandler,
+  delete: DeleteLocationHandler,
+  edit: EditLocationHandler,
+  get: GetLocationHandler,
   'get-location-ratings': GetLocationRatingsHandler,
-  'get-location': GetLocationHandler,
   'rate-location': RateLocationHandler,
 } as Record<string, typeof Handler>;
