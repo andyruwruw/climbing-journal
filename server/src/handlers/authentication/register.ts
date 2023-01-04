@@ -40,7 +40,7 @@ export class RegisterHandler extends Handler {
         height = -1,
         span = 100,
         weight = -1,
-        image = ''
+        image = '',
       } = req.body;
 
       // Are the required fields provided?

@@ -28,7 +28,7 @@ export class DeleteLocationHandler extends Handler {
     res: ClimbingResponse,
   ): Promise<void> {
     try {
-      const { id } = req.body;
+      const { id } = req.params;
 
       // Are the required fields provided?
       if (!id) {

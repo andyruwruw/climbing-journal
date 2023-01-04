@@ -4,7 +4,7 @@ import { MaxSends } from "../types";
  * Database type enum.
  */
  export const DATABASE_TYPES = {
-  MONGO: 'mongodb',
+  MONGO: 'mongo',
   CACHE: 'cache',
 };
 
@@ -16,7 +16,7 @@ export const DEVELOPMENT_URL = 'http://localhost:3000';
 /**
  * Production URL for cors.
  */
-export const PRODUCTION_URL = '';
+export const PRODUCTION_URL = 'climbing-journal.vercel.app';
 
 /**
  * Maximum number of dependent objects.

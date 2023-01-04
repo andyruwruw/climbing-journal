@@ -6,6 +6,7 @@ import { GetUserFollowingsHandler } from './get-user-followings';
 import { GetUserMedalsHandler } from './get-user-medals';
 import { GetUserHandler } from './get-user';
 import { UnfollowUserHandler } from './unfollow-user';
+import { UpdateUserHandler } from './update-user';
 
 export default {
   follow: FollowUserHandler,
@@ -14,4 +15,5 @@ export default {
   'get-medals': GetUserMedalsHandler,
   get: GetUserHandler,
   unfollow: UnfollowUserHandler,
+  update: UpdateUserHandler,
 } as Record<string, typeof Handler>;
