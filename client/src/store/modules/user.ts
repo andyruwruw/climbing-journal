@@ -155,7 +155,7 @@ const actions: ActionTree<AuthModuleState, any> = {
 
       if (user) {
         commit('setUser', user);
-        dispatch('shows/fetchSaved', undefined, { root: true });
+        // dispatch('shows/fetchSaved', undefined, { root: true });
         dispatch('navigation/goToHome', undefined, { root: true });
       }
     } catch (error) {
@@ -172,7 +172,7 @@ const actions: ActionTree<AuthModuleState, any> = {
 
       if (user) {
         commit('setUser', user);
-        dispatch('shows/fetchSaved', undefined, { root: true });
+        // dispatch('shows/fetchSaved', undefined, { root: true });
         dispatch('navigation/goToHome', undefined, { root: true });
       }
     } catch (error) {

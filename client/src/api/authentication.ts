@@ -20,17 +20,17 @@ const checkUser = async (): Promise<User | null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Logs a user in.
  *
  * @returns {Promise<User | null>} User if logged in, null otherwise.
  */
- const login = async (
+const login = async (
   username: string,
   password: string,
- ): Promise<User | null> => {
+): Promise<User | null> => {
   try {
     const response = await request.post(
       '/authentication/login',
@@ -47,7 +47,7 @@ const checkUser = async (): Promise<User | null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Logs a user out.
@@ -61,14 +61,14 @@ const logout = async (): Promise<User | null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Registers a new user.
  *
  * @returns {Promise<User | null>} User if logged in, null otherwise.
  */
- const register = async (
+const register = async (
   name: string,
   username: string,
   password: string,
@@ -76,8 +76,8 @@ const logout = async (): Promise<User | null> => {
   height = -1,
   span = 100,
   weight = -1,
-  image = ''
- ): Promise<User | null> => {
+  image = '',
+): Promise<User | null> => {
   try {
     const response = await request.post(
       '/authentication/register',
@@ -100,7 +100,7 @@ const logout = async (): Promise<User | null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 export default {
   checkUser,

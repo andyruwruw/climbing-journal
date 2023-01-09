@@ -40,7 +40,7 @@ const create = async (
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Deletes an existing location.
@@ -55,7 +55,7 @@ const deleteLocation = async (id: string): Promise<null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Edits an existing location.
@@ -86,7 +86,7 @@ const edit = async (
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Retrieves a locations ratings.
@@ -104,7 +104,7 @@ const getRatings = async (id: string): Promise<LocationRating[] | null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Retrieves a location..
@@ -122,7 +122,7 @@ const get = async (id: string): Promise<Location | null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Rates a location..
@@ -141,7 +141,7 @@ const rate = async (
         id,
         notes,
         rating,
-      }
+      },
     );
 
     if (response.status === 200) {
@@ -151,7 +151,7 @@ const rate = async (
   } catch (error) {
     return null;
   }
-}
+};
 
 export default {
   create,

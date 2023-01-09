@@ -22,7 +22,7 @@ const follow = async (id: string): Promise<null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Retrieves a user's followers.
@@ -40,7 +40,7 @@ const getFollowers = async (id: string): Promise<User[]> => {
   } catch (error) {
     return [] as User[];
   }
-}
+};
 
 /**
  * Retrieves a user's followings.
@@ -58,7 +58,7 @@ const getFollowings = async (id: string): Promise<User[]> => {
   } catch (error) {
     return [] as User[];
   }
-}
+};
 
 /**
  * Retrieves a user's medals.
@@ -76,7 +76,7 @@ const getMedals = async (id: string): Promise<Medal[]> => {
   } catch (error) {
     return [] as Medal[];
   }
-}
+};
 
 /**
  * Retrieves a user.
@@ -94,7 +94,7 @@ const get = async (id: string): Promise<User | null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Unfollows a user.
@@ -108,7 +108,7 @@ const unfollow = async (id: string): Promise<null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Edits an existing user.
@@ -145,7 +145,7 @@ const update = async (
   } catch (error) {
     return null;
   }
-}
+};
 
 export default {
   follow,

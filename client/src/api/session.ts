@@ -47,7 +47,7 @@ const create = async (
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Deletes an existing session.
@@ -61,7 +61,7 @@ const deleteSession = async (id: string): Promise<null> => {
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Edits an existing session.
@@ -84,6 +84,7 @@ const edit = async (
     const response = await request.post(
       '/session/edit',
       {
+        id,
         start,
         location,
         duration,
@@ -103,14 +104,14 @@ const edit = async (
   } catch (error) {
     return null;
   }
-}
+};
 
 /**
  * Retrieves sessions for a user.
  *
  * @returns {Promise<Session[]>} Promise of the action.
  */
- const getUserSessions = async (id: string): Promise<Session[]> => {
+const getUserSessions = async (id: string): Promise<Session[]> => {
   try {
     const response = await request.get(`/session/get-user-sessions?id=${id}`);
 
@@ -121,7 +122,7 @@ const edit = async (
   } catch (error) {
     return [] as Session[];
   }
-}
+};
 
 export default {
   create,
