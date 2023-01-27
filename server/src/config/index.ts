@@ -1,4 +1,5 @@
-import { MaxSends } from "../types";
+// Types
+import { MaxSends } from '../types';
 
 /**
  * Database type enum.
