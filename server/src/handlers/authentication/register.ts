@@ -41,6 +41,7 @@ export class RegisterHandler extends Handler {
         span = 100,
         weight = -1,
         image = '',
+        privacy = 'unlisted',
       } = req.body;
 
       // Are the required fields provided?

@@ -1,5 +1,12 @@
 <template>
   <div :class="$style.component">
+    <climbing-hold />
+
+    <climbing-hold />
+
+    <climbing-hold />
+
+    <climbing-hold />
   </div>
 </template>
 
@@ -7,8 +14,15 @@
 // Packages
 import Vue from 'vue';
 
+// Local Imports
+import ClimbingHold from '@/components/ui/accents/ClimbingHold.vue';
+
 export default Vue.extend({
-  name: 'AboutView',
+  name: 'LandingView',
+
+  components: {
+    ClimbingHold,
+  },
 });
 </script>
 

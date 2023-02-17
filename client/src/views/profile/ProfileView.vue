@@ -1,5 +1,6 @@
 <template>
-  <div></div>
+  <div :class="$style.component">
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,3 +11,10 @@ export default Vue.extend({
   name: 'ProfileView',
 });
 </script>
+
+<style lang="scss" module>
+.component {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+</style>
