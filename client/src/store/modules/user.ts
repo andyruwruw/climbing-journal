@@ -1,5 +1,4 @@
 // Packages
-import api from '@/api';
 import {
   ActionTree,
   GetterTree,
@@ -7,15 +6,21 @@ import {
   MutationTree,
 } from 'vuex';
 
+// Local Imports
+import api from '../../api';
+
 // Types
-import { User } from '../../types';
+import {
+  User,
+  UserPrivacy,
+} from '../../types';
 
-/*
-  User Module.
-
-  The user module will manage the current logged in user and their
-  general information.
-*/
+/**
+ * User Module
+ *
+ * The user module will manage the current logged in user and their
+ * general information.
+ */
 
 // State interface
 export interface AuthModuleState extends Record<string, any> {
@@ -109,7 +114,7 @@ const actions: ActionTree<AuthModuleState, any> = {
         password,
       );
 
-      if (user) {
+      if (!('message' in user)) {
         commit('setUser', user);
         dispatch('sessions/loadSessions', undefined, { root: true });
         dispatch('navigation/goToHome', undefined, { root: true });
@@ -127,6 +132,12 @@ const actions: ActionTree<AuthModuleState, any> = {
    * @param {string} payload.name User's name.
    * @param {string} payload.username User's username.
    * @param {string} payload.password User's password.
+   * @param {number} [payload.started = -1,] When the user started climbing.
+   * @param {number} [payload.height = -1,] The user's height.
+   * @param {number} [payload.span = 100,] The user's span to height difference.
+   * @param {number} [payload.weight = -1,] The user's weight.
+   * @param {string} [payload.image = '',] The user's profile image.
+   * @param {UserPrivacy} [payload.privacy = 'unlisted',] Privacy setttings.
    */
   async register({
     commit,
@@ -140,6 +151,7 @@ const actions: ActionTree<AuthModuleState, any> = {
     span = 100,
     weight = -1,
     image = '',
+    privacy = 'unlisted' as UserPrivacy,
   }): Promise<void> {
     try {
       const user = await api.authentication.register(
@@ -151,9 +163,10 @@ const actions: ActionTree<AuthModuleState, any> = {
         span,
         weight,
         image,
+        privacy,
       );
 
-      if (user) {
+      if (!('message' in user)) {
         commit('setUser', user);
         dispatch('sessions/loadSessions', undefined, { root: true });
         dispatch('navigation/goToHome', undefined, { root: true });
@@ -163,6 +176,11 @@ const actions: ActionTree<AuthModuleState, any> = {
     }
   },
 
+  /**
+   * Checks if user has a current session.
+   *
+   * @param {ActionContext<NavigationState, any>} context Vuex action context.
+   */
   async checkUser({
     commit,
     dispatch,
@@ -170,38 +188,10 @@ const actions: ActionTree<AuthModuleState, any> = {
     try {
       const user = await api.authentication.checkUser();
 
-      if (user) {
+      if (!('message' in user)) {
         commit('setUser', user);
         dispatch('sessions/loadSessions', undefined, { root: true });
         dispatch('navigation/goToHome', undefined, { root: true });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
-  async updateUser({ commit }, {
-    name = undefined as undefined | string,
-    password = undefined as undefined | string,
-    started = undefined as undefined | number,
-    height = undefined as undefined | number,
-    span = undefined as undefined | number,
-    weight = undefined as undefined | number,
-    image = undefined as undefined | string,
-  }): Promise<void> {
-    try {
-      const response = await api.user.update(
-        name,
-        password,
-        started,
-        height,
-        span,
-        weight,
-        image,
-      );
-
-      if (response) {
-        commit('setUser', response);
       }
     } catch (error) {
       console.log(error);
@@ -218,7 +208,6 @@ const actions: ActionTree<AuthModuleState, any> = {
     dispatch,
   }): void {
     commit('reset');
-    commit('shows/reset', undefined, { root: true });
     dispatch('navigation/goToLanding', undefined, { root: true });
     api.authentication.logout();
   },

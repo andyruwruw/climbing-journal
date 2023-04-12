@@ -13,7 +13,7 @@
 import Vue from 'vue';
 
 // Local Imports
-import AppBar from './components/ui/navigation/app-bar.vue';
+import AppBar from './components/ui/app-bar/AppBar.vue';
 
 export default Vue.extend({
   name: 'App',

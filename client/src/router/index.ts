@@ -1,25 +1,49 @@
+// Packages
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 
-import HomeView from '../views/home/index.vue';
+// Local Imports
+import LandingView from '../views/landing/LandingView.vue';
+import LoginView from '../views/login/LoginView.vue';
+import HomeView from '../views/home/HomeView.vue';
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Home',
-    component: HomeView,
+    name: 'Landing',
+    component: LandingView,
   },
   {
     path: '/login',
     name: 'Login',
-    component: () => import('../views/login/index.vue'),
+    component: LoginView,
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: HomeView,
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: () => import('../views/about/AboutView.vue'),
   },
   {
     path: '/profile/:id',
     name: 'Profile',
-    component: () => import('../views/profile/index.vue'),
+    component: () => import('../views/profile/ProfileView.vue'),
+  },
+  {
+    path: '/session/:id',
+    name: 'Session',
+    component: () => import('../views/session/SessionView.vue'),
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: () => import('../views/error/404View.vue'),
   },
 ];
 

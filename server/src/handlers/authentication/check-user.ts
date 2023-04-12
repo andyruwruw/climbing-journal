@@ -1,6 +1,9 @@
 // Local Imports
 import { Handler } from '../handler';
-import { convertUserToPublic, validate } from '../../helpers/authentication';
+import {
+  convertUserToPublic,
+  validate,
+} from '../../helpers/authentication';
 
 // Types
 import {

@@ -90,7 +90,7 @@ const actions: ActionTree<NavigationState, any> = {
   }): void {
     try {
       if (!rootGetters['user/isLoggedIn']) {
-        router.push('/login');
+        router.push('/');
       }
     } catch (error) {
       dispatch('goTo404');
@@ -127,25 +127,8 @@ const actions: ActionTree<NavigationState, any> = {
   }): void {
     try {
       if (state.currentPage !== 'Home') {
-        router.push('/');
+        router.push('/home');
       }
-    } catch (error) {
-      dispatch('goTo404');
-    }
-  },
-
-  /**
-   * Routes the user to Home page.
-   *
-   * @param {ActionContext<NavigationState, any>} context Vuex action context.
-   */
-  search({
-    dispatch,
-  }, {
-    query,
-  }): void {
-    try {
-      router.push(`/search/${query}`);
     } catch (error) {
       dispatch('goTo404');
     }

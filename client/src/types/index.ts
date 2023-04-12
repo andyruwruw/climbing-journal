@@ -1,4 +1,4 @@
-export interface DatabaseItem {
+interface DatabaseItem {
   _id?: string;
 }
 
@@ -56,6 +56,15 @@ export interface Session extends DatabaseItem {
 }
 export type SessionReference = string | Session;
 
+export interface Token extends DatabaseItem {
+  user: UserReference;
+  token: string;
+  created?: Date;
+}
+export type TokenReference = string | Token;
+
+export type UserPrivacy = 'unlisted' | 'public' | 'private';
+
 export interface User extends DatabaseItem {
   name: string;
   username: string;
@@ -74,3 +83,8 @@ export interface Follow extends DatabaseItem {
   created?: Date;
 }
 export type FollowReference = string | Follow;
+
+export interface ErrorResponse {
+  status: number;
+  message: string;
+}

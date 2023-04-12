@@ -1,1 +1,1 @@
-# climbing-journal
+# Climbing Journal

@@ -2,73 +2,97 @@
 import request from './request';
 
 // Types
-import { User } from '../types';
+import {
+  User,
+  ErrorResponse,
+  UserPrivacy,
+} from '../types';
 
 /**
- * Checks if the user is logged in.
+ * Checks if user has a current session.
  *
- * @returns {Promise<User | null>} User if logged in, null otherwise.
+ * @returns {Promise<User | ErrorResponse>} Promise of action.
  */
-const checkUser = async (): Promise<User | null> => {
+export const checkUser = async (): Promise<User | ErrorResponse> => {
   try {
     const response = await request.get('/authentication/check-user');
 
     if (response.status === 200) {
       return response.data.user;
     }
-    return null;
+    return {
+      status: response.status,
+      message: response.data.error,
+    };
   } catch (error) {
-    return null;
+    return {
+      status: 400,
+      message: `${error}`,
+    };
   }
 };
 
 /**
- * Logs a user in.
+ * Creates a new login session.
  *
- * @returns {Promise<User | null>} User if logged in, null otherwise.
+ * @param {string} username User's username.
+ * @param {string} password User's password.
+ * @returns {Promise<User | ErrorResponse>} User object or error.
  */
-const login = async (
+export const login = async (
   username: string,
   password: string,
-): Promise<User | null> => {
+): Promise<User | ErrorResponse> => {
   try {
-    const response = await request.post(
-      '/authentication/login',
-      {
-        username,
-        password,
-      },
-    );
+    const response = await request.post('/authentication/login', {
+      username,
+      password,
+    });
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.user;
     }
-    return null;
+    return {
+      status: response.status,
+      message: response.data.error,
+    };
   } catch (error) {
-    return null;
+    return {
+      status: 400,
+      message: `${error}`,
+    };
   }
 };
 
 /**
- * Logs a user out.
- *
- * @returns {Promise<null>} Promise of action.
+ * Removes user's current login session.
  */
-const logout = async (): Promise<User | null> => {
+export const logout = async (): Promise<void | ErrorResponse> => {
   try {
-    await request.get('/authentication/logout');
-    return null;
+    return await request.delete('/authentication/logout');
   } catch (error) {
-    return null;
+    return {
+      status: 400,
+      message: `${error}`,
+    };
   }
 };
 
 /**
- * Registers a new user.
+ * Creates a new user.
  *
- * @returns {Promise<User | null>} User if logged in, null otherwise.
+ * @param {string} name User's name.
+ * @param {string} username User's username.
+ * @param {string} password User's password.
+ * @param {number} [started = -1,] When the user started climbing.
+ * @param {number} [height = -1,] The user's height.
+ * @param {number} [span = 100,] The user's span to height difference.
+ * @param {number} [weight = -1,] The user's weight.
+ * @param {string} [image = '',] The user's profile image.
+ * @param {UserPrivacy} [privacy = 'unlisted',] Privacy setttings.
+ * @returns {Promise<User | ErrorResponse>} User object or error.
  */
-const register = async (
+export const register = async (
   name: string,
   username: string,
   password: string,
@@ -77,28 +101,33 @@ const register = async (
   span = 100,
   weight = -1,
   image = '',
-): Promise<User | null> => {
+  privacy = 'unlisted' as UserPrivacy,
+): Promise<User | ErrorResponse> => {
   try {
-    const response = await request.post(
-      '/authentication/register',
-      {
-        name,
-        username,
-        password,
-        started,
-        height,
-        span,
-        weight,
-        image,
-      },
-    );
+    const response = await request.post('/authentication/register', {
+      name,
+      username,
+      password,
+      started,
+      height,
+      span,
+      weight,
+      image,
+      privacy,
+    });
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.user;
     }
-    return null;
+    return {
+      status: response.status,
+      message: response.data.error,
+    };
   } catch (error) {
-    return null;
+    return {
+      status: 400,
+      message: `${error}`,
+    };
   }
 };
 

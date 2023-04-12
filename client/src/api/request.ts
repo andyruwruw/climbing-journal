@@ -1,14 +1,18 @@
 // Packages
 import axios from 'axios';
 
-// Local Imports
-import { API_BASE_URL } from '../config';
+const ApiBaseUrl = (): string => {
+  if (process.env.VUE_APP_ENVIRONMENT !== 'development') {
+    return '';
+  }
+  return 'http://localhost:3000/api';
+};
 
 /**
  * Axios instance set up for the API.
  */
 const request = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: ApiBaseUrl(),
 });
 
 export default request;
