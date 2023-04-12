@@ -26,5 +26,6 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" module>
-
+.component {
+}
 </style>

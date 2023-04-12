@@ -109,6 +109,7 @@ export class MongoDatabase extends Database {
    * @returns {boolean} Whether the class is connected to the database.
    */
   isConnected(): boolean {
+    console.log(`Ready status: ${connection.readyState === 1}`);
     return connection.readyState === 1;
   }
 }

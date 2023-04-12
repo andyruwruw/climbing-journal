@@ -18,8 +18,9 @@ export const initializeDatabase = async (databaseType = 'cache') => {
   if (!DatabaseInstace) {
     if (databaseType === DATABASE_TYPES.MONGO) {
       DatabaseInstace = new MongoDatabase();
+    } else {
+      DatabaseInstace = new CacheDatabase();
     }
-    DatabaseInstace = new CacheDatabase();
   }
 };
 

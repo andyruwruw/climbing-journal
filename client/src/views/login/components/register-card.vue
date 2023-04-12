@@ -26,13 +26,19 @@
         outlined />
 
       <v-btn
+        :class="$style.action"
         color="primary"
+        outlined
+        block
         @click="handleSubmit">
         Register
       </v-btn>
 
       <v-btn
+        :class="$style.action"
         color="primary"
+        outlined
+        block
         @click="toggle">
         Sign In Instead
       </v-btn>
@@ -79,5 +85,16 @@ export default Vue.extend({
 <style lang="scss" module>
 .content {
   margin: 2rem;
+  width: calc(100vw - 2rem);
+  max-width: 400px;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.action:not(:last-child) {
+  margin-bottom: 1.5rem;
 }
 </style>

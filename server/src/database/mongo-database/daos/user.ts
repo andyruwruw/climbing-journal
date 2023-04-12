@@ -1,5 +1,6 @@
 // Packages
 import { Model } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 // Local Imports
 import { UserModel } from '../models';
@@ -10,6 +11,7 @@ import {
   User as UserInterface,
   DataAccessObject as DataAccessObjectInterface,
 } from '../../../types';
+import { SALT_WORK_FACTOR } from '../../../config';
 
 /**
  * Data access object for Users.
@@ -40,10 +42,18 @@ export class User
     weight = -1,
     image = '',
   ): Promise<UserInterface> {
+    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+
+    // hash the password along with our new salt
+    const hash = await bcrypt.hash(
+      password,
+      salt,
+    );
+
     return this._create({
       name,
       username,
-      password,
+      password: hash,
       started,
       height,
       weight,
