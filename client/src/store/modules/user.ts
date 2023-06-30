@@ -116,6 +116,7 @@ const actions: ActionTree<AuthModuleState, any> = {
 
       if (!('message' in user)) {
         commit('setUser', user);
+        dispatch('sessions/loadSessions', undefined, { root: true });
         dispatch('navigation/goToHome', undefined, { root: true });
       } else {
         dispatch('error/logError', { error: user.message }, { root: true });
@@ -169,6 +170,7 @@ const actions: ActionTree<AuthModuleState, any> = {
 
       if (!('message' in user)) {
         commit('setUser', user);
+        dispatch('sessions/loadSessions', undefined, { root: true });
         dispatch('navigation/goToHome', undefined, { root: true });
       } else {
         dispatch('error/logError', { error: user.message }, { root: true });
@@ -192,6 +194,7 @@ const actions: ActionTree<AuthModuleState, any> = {
 
       if (!('message' in user)) {
         commit('setUser', user);
+        dispatch('sessions/loadSessions', undefined, { root: true });
         dispatch('navigation/goToHome', undefined, { root: true });
       }
     } catch (error) {

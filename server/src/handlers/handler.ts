@@ -59,6 +59,8 @@ export class Handler {
           Environment.getDatabaseUser(),
           Environment.getDatabasePassword(),
         );
+
+        console.log('Database connected');
       }
 
       this._ready = true;
