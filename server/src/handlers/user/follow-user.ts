@@ -33,9 +33,10 @@ export class FollowUserHandler extends Handler {
 
       // Are the required fields provided?
       if (!id) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'id'),
         });
+        return;
       }
 
       const user = await validate(
@@ -50,7 +51,7 @@ export class FollowUserHandler extends Handler {
         return;
       }
 
-      const followee = await Handler.database.user.findById(id);
+      const followee = await Handler.database.user.findById(id as string);
 
       if (!followee) {
         res.status(400).send({

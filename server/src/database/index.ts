@@ -32,5 +32,5 @@ export const initializeDatabase = async (databaseType = 'cache') => {
 export const getDatabase = (databaseType = 'cache'): DatabaseClass => {
   initializeDatabase(databaseType);
 
-  return DatabaseInstace;
+  return DatabaseInstace as DatabaseClass;
 };

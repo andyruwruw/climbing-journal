@@ -39,9 +39,10 @@ export class CreateLocationHandler extends Handler {
 
       // Are the required fields provided?
       if (!name) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('location', 'name'),
         });
+        return;
       }
 
       const user = await validate(

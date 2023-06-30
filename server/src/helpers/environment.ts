@@ -28,7 +28,7 @@ export class Environment {
    * @returns {string} Type of database to use.
    */
   static getDatabaseType(): string {
-    return process.env.DATABASE_TYPE || 'cache';
+    return process.env.DATABASE_TYPE as string || 'cache';
   }
 
   /**
@@ -70,7 +70,7 @@ export class Environment {
    * @returns {number} Server port.
    */
   static getPort(): number {
-    return parseInt(process.env.PORT, 10) || 3000;
+    return process.env.PORT ? parseInt(process.env.PORT as string, 10) : 3000;
   }
 
   /**
@@ -106,6 +106,6 @@ export class Environment {
    * @returns {string} Server secret.
    */
   static getSecret(): string {
-    return process.env.SECRET;
+    return process.env.SECRET as string;
   }
 }

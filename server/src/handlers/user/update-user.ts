@@ -42,9 +42,10 @@ export class UpdateUserHandler extends Handler {
 
       // Are the required fields provided?
       if (!id) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'id'),
         });
+        return;
       }
 
       const user = await validate(
@@ -84,7 +85,7 @@ export class UpdateUserHandler extends Handler {
       }
 
       const affectedRows = await Handler.database.user.updateOne({
-        _id: user._id,
+        _id: user._id as string,
       }, update);
 
       if (!affectedRows) {
@@ -94,7 +95,7 @@ export class UpdateUserHandler extends Handler {
         return;
       }
 
-      const newUser = await Handler.database.user.findById(user._id);
+      const newUser = await Handler.database.user.findById(user._id as string);
 
       res.status(200).send({
         user: newUser,

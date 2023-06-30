@@ -31,12 +31,13 @@ export class GetUserHandler extends Handler {
 
       // Are the required fields provided?
       if (!id) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'id'),
         });
+        return;
       }
 
-      const user = await Handler.database.user.findById(id);
+      const user = await Handler.database.user.findById(id as string);
 
       res.status(200).send({
         user: convertUserToPublic(user),

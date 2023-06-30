@@ -45,9 +45,10 @@ export class EditSessionHandler extends Handler {
 
       // Are the required fields provided?
       if (!id) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('session', 'id'),
         });
+        return;
       }
 
       const user = await validate(
@@ -94,7 +95,7 @@ export class EditSessionHandler extends Handler {
 
       const success = await Handler.database.session.updateOne({
         _id: id,
-        user: user._id,
+        user: user._id as string,
       }, update);
 
       if (!success) {

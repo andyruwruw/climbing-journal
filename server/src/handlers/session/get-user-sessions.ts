@@ -30,13 +30,14 @@ export class GetUserSessionsHandler extends Handler {
 
       // Are the required fields provided?
       if (!id) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'id'),
         });
+        return;
       }
 
       const sessions = await Handler.database.session.find({
-        user: id,
+        user: id as string,
       });
 
       res.status(200).send({

@@ -32,6 +32,7 @@ export class RegisterHandler extends Handler {
     res: ClimbingResponse,
   ): Promise<void> {
     try {
+      console.log(req.body);
       const {
         name,
         username,
@@ -41,24 +42,27 @@ export class RegisterHandler extends Handler {
         span = 100,
         weight = -1,
         image = '',
-        privacy = 'unlisted',
+        privacy = 'public',
       } = req.body;
 
       // Are the required fields provided?
       if (!name) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_CREATE_HANDLER_PARAMETER_MISSING('user', 'name'),
         });
+        return;
       }
       if (!username) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_CREATE_HANDLER_PARAMETER_MISSING('user', 'username'),
         });
+        return;
       }
       if (!password) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_CREATE_HANDLER_PARAMETER_MISSING('user', 'password'),
         });
+        return;
       }
 
       // Check for duplicate username.
@@ -81,6 +85,7 @@ export class RegisterHandler extends Handler {
         span,
         weight,
         image,
+        privacy,
       );
 
       if (!user) {

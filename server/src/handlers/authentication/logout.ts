@@ -26,23 +26,25 @@ export class LogoutHandler extends Handler {
   ): Promise<void> {
     try {
       const cookie = getCookie(req);
-      const user = await validate(cookie, Handler.database);
+      const user = await validate(req, Handler.database);
 
       if (!cookie || !user) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_LOGOUT_FAILURE,
         });
+        return;
       }
 
       const affectedRows = await Handler.database.token.delete({
-        user: user._id,
+        user: user._id as string,
         token: cookie,
       });
 
       if (affectedRows === 0) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_LOGOUT_FAILURE,
         });
+        return;
       }
 
       attatchCookie(

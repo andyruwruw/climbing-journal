@@ -37,7 +37,7 @@ interface Medal extends DatabaseItem {
   data: string;
   created?: Date;
 }
-type MedalReference = string | MedalRating;
+type MedalReference = string | Medal;
 
 type SessionFocus = 'bouldering' | 'top-rope' | 'sport' | 'trad' | 'ice' | 'mixed' | 'training' | 'other';
 
@@ -64,14 +64,16 @@ interface Session extends DatabaseItem {
   images: string[];
   updated?: Date;
 }
-type SessionReference = string | SessionRating;
+type SessionReference = string | Session;
 
 interface Token extends DatabaseItem {
   user: UserReference;
   token: string;
   created?: Date;
 }
-type TokenReference = string | TokenRating;
+type TokenReference = string | Token;
+
+type UserPrivacy = 'unlisted' | 'private' | 'public';
 
 interface PublicUser extends DatabaseItem {
   name: string;
@@ -82,20 +84,21 @@ interface PublicUser extends DatabaseItem {
   weight: number;
   created?: Date;
   image: string;
+  privacy: UserPrivacy;
 }
 interface User extends PublicUser {
   password: string;
   admin?: boolean;
   updated?: Date;
 }
-type UserReference = string | UserRating;
+type UserReference = string | User;
 
 interface Follow extends DatabaseItem {
   user: UserReference;
   following: UserReference;
   created?: Date;
 }
-type FollowReference = string | FollowRating;
+type FollowReference = string | Follow;
 
 
 /**
@@ -169,6 +172,6 @@ export interface IHandler {
   ): Promise<void>;
 }
 
-export type ClimbingRequest = VercelRequest | Request | MockedRequest;
+export type ClimbingRequest = VercelRequest | Request;
 
-export type ClimbingResponse = VercelResponse | Response | MockedResponse;
+export type ClimbingResponse = VercelResponse | Response;

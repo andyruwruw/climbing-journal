@@ -8,8 +8,9 @@ import {
   Session,
   Token,
   User,
-  DataAccessObject,
+  DataAccessObject as DataAccessObjectInterface,
 } from '../types';
+import { DataAccessObject } from './dao';
 import { UsedAbstractDatabaseError } from '../errors/used-abstract-database-error';
 
 /**
@@ -19,37 +20,37 @@ export class Database {
   /**
    * Data access object for Follows.
    */
-  follow: DataAccessObject<Follow>;
+  follow: DataAccessObjectInterface<Follow> = new DataAccessObject();
 
   /**
    * Data access object for Locations.
    */
-  location: DataAccessObject<Location>;
+  location: DataAccessObjectInterface<Location> = new DataAccessObject();
 
   /**
    * Data access object for Location Ratings.
    */
-  locationRating: DataAccessObject<LocationRating>;
+  locationRating: DataAccessObjectInterface<LocationRating> = new DataAccessObject();
 
   /**
    * Data access object for Medals.
    */
-  medal: DataAccessObject<Medal>;
+  medal: DataAccessObjectInterface<Medal> = new DataAccessObject();
 
   /**
    * Data access object for Sessions.
    */
-  session: DataAccessObject<Session>;
+  session: DataAccessObjectInterface<Session> = new DataAccessObject();
 
   /**
    * Data access object for Tokens.
    */
-  token: DataAccessObject<Token>;
+  token: DataAccessObjectInterface<Token> = new DataAccessObject();
 
   /**
    * Data access object for Users.
    */
-  user: DataAccessObject<User>;
+  user: DataAccessObjectInterface<User> = new DataAccessObject();
 
   /**
    * Connects to database.

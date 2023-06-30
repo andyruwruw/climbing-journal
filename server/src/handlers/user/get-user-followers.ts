@@ -33,22 +33,23 @@ export class GetUserFollowersHandler extends Handler {
 
       // Are the required fields provided?
       if (!id) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'id'),
         });
+        return;
       }
 
       const follows = await Handler.database.follow.find({
-        following: id,
+        following: id as string,
       });
 
       const users = await Promise.all(
         follows.map(async (follow: Follow): Promise<PublicUser> => {
           const user = await Handler.database.user.findById(
-            follow.user,
+            follow.user as string,
           );
 
-          return convertUserToPublic(user);
+          return convertUserToPublic(user) as PublicUser;
         }),
       );
 

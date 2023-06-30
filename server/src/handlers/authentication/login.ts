@@ -39,14 +39,16 @@ export class LoginHandler extends Handler {
 
       // Are the required fields provided?
       if (!username) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'username'),
         });
+        return;
       }
       if (!password) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'password'),
         });
+        return;
       }
 
       const user = await Handler.database.user.findOne({ username });

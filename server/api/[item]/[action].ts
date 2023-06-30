@@ -5,7 +5,7 @@ import {
 } from '@vercel/node';
 
 // Local Imports
-import ROUTES from '../../src/handlers';
+import ROUTES from '../../src/handlers/index';
 import { handleCors } from '../../src/helpers/cors';
 
 /**
@@ -18,6 +18,7 @@ export default async function (
   req: VercelRequest,
   res: VercelResponse,
 ): Promise<void> {
+  console.log(req.method);
   /**
    * ID of endpoint.
    */
@@ -33,6 +34,10 @@ export default async function (
     req,
     res,
   );
+
+  if (req.method === 'OPTIONS') {
+    res.send(200);
+  }
 
   // Instantiate handler.
   const handler = await (new ROUTES[item as string][action as string]());

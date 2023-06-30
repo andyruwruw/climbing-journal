@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const ApiBaseUrl = (): string => {
   if (process.env.VUE_APP_ENVIRONMENT !== 'development') {
-    return '';
+    return 'http://localhost:3000/api';
   }
   return 'http://localhost:3000/api';
 };

@@ -4,23 +4,9 @@
   "plugins": [
     "@typescript-eslint"
   ],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
   "extends": [
-    "airbnb-base",
-    "airbnb-typescript/base"
-  ],
-  "rules": {
-    // Abstract functions
-    "@typescript-eslint/no-empty-function": "off",
-    // Named exports are nice.
-    "import/prefer-default-export": "off",
-    // Psudo private methods and properties.
-    "no-underscore-dangle": "off",
-    // Breaks inheritance given that static methods can't be inherited.
-    "class-methods-use-this": "off",
-    // Server based logs are used for maintenance.
-    "no-console": "off"
-  }
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ]
 }

@@ -23,7 +23,7 @@ export class Handler {
   /**
    * Whether the handler is ready to execute.
    */
-  _ready: boolean;
+  _ready: boolean = false;
 
   /**
    * Instantiates a new handler.

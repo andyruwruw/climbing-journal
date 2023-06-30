@@ -32,9 +32,10 @@ export class UnfollowUserHandler extends Handler {
 
       // Are the required fields provided?
       if (!id) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'id'),
         });
+        return;
       }
 
       const user = await validate(
@@ -50,8 +51,8 @@ export class UnfollowUserHandler extends Handler {
       }
 
       const affectedRows = await Handler.database.location.delete({
-        user: user._id,
-        following: id,
+        user: user._id as string,
+        following: id as string,
       });
 
       if (!affectedRows) {

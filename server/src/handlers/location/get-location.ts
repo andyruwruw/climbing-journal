@@ -26,16 +26,17 @@ export class GetLocationHandler extends Handler {
     res: ClimbingResponse,
   ): Promise<void> {
     try {
-      const { id } = req.params;
+      const { id } = req.query;
 
       // Are the required fields provided?
       if (!id) {
-        return res.status(400).send({
+        res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('location', 'id'),
         });
+        return;
       }
 
-      const location = await Handler.database.location.findById(id);
+      const location = await Handler.database.location.findById(id as string);
 
       res.status(200).send({
         location,
