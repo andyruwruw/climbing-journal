@@ -7,27 +7,19 @@ import {
 const schema = new Schema({
   name: {
     type: String,
-    default: 'Climbing Location',
+    required: true,
   },
-  location: {
-    type: String,
-    default: '',
+  href: {
+    type: Object,
+    required: {},
   },
-  address: {
-    type: String,
-    default: '',
-  },
-  outdoors: {
+  indoors: {
     type: Boolean,
     default: false,
   },
-  updated: {
-    type: Date,
-    default: Date.now,
-  },
-  image: {
+  state: {
     type: String,
-    default: '',
+    required: true,
   },
 });
 

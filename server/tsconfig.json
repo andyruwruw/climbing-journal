@@ -1,27 +1,20 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "incremental": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "./src/types",
+    ],
+    "allowJs": true,
+    "esModuleInterop": true,
     "paths": {
       "@/*": [
         "./src/*"
       ]
     }
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  }
 }

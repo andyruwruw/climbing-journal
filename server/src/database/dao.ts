@@ -12,7 +12,6 @@ import {
  * Abstract class for Data Access Objects.
  */
 export class DataAccessObject<T> {
-
   /**
    * Instantiates a new DataAccessObject.
    */

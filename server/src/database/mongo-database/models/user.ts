@@ -13,25 +13,33 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  password: {
-    type: String,
-    required: true,
+  started: {
+    type: Date,
+    default: new Date(0),
+  },
+  height: {
+    type: Number,
+    default: 0,
+  },
+  span: {
+    type: Number,
+    default: -100,
+  },
+  weight: {
+    type: Number,
+    default: 0,
   },
   created: {
     type: Date,
     default: Date.now,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   updated: {
     type: Date,
     default: Date.now,
-  },
-  started: {
-    type: Date,
-    default: Date.now,
-  },
-  admin: {
-    type: Boolean,
-    default: false,
   },
   image: {
     type: String,
@@ -39,8 +47,12 @@ const schema = new Schema({
   },
   privacy: {
     type: String,
-    default: '',
-  }
+    default: 'unlisted',
+  },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const UserModel = model('User', schema);

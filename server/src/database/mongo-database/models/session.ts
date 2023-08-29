@@ -5,82 +5,53 @@ import {
 } from 'mongoose';
 
 const schema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+  name: {
+    type: String,
     required: true,
   },
-  location: {
-    type: Schema.Types.ObjectId,
-    ref: 'Location',
+  username: {
+    type: String,
     required: true,
   },
-  start: {
+  started: {
     type: Date,
-    default: Date.now,
+    default: new Date(0),
   },
-  duration: {
+  height: {
     type: Number,
     default: 0,
   },
-  notes: {
+  span: {
+    type: Number,
+    default: -100,
+  },
+  weight: {
+    type: Number,
+    default: 0,
+  },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
+  password: {
     type: String,
-    default: '',
-  },
-  ability: {
-    type: Number,
-    default: 10,
-  },
-  felt: {
-    type: Number,
-    default: 10,
-  },
-  focus: {
-    type: Array,
-    of: {
-      type: String,
-    },
-  },
-  max: {
-    boulder: {
-      type: Number,
-      default: 0,
-    },
-    topRope: {
-      type: Number,
-      default: 0,
-    },
-    sport: {
-      type: Number,
-      default: 0,
-    },
-    trad: {
-      type: Number,
-      default: 0,
-    },
-    speed: {
-      type: Number,
-      default: 0,
-    },
-    mixed: {
-      type: Number,
-      default: 0,
-    },
-    ice: {
-      type: Number,
-      default: 0,
-    },
-  },
-  images: {
-    type: Array,
-    of: {
-      type: String,
-    },
-    default: [],
+    required: true,
   },
   updated: {
     type: Date,
     default: Date.now,
+  },
+  image: {
+    type: String,
+    default: '',
+  },
+  privacy: {
+    type: String,
+    default: 'unlisted',
+  },
+  admin: {
+    type: Boolean,
+    default: false,
   },
 });
 

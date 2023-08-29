@@ -20,23 +20,21 @@ export class Medal
   /**
    * Creates a Medal in the Database.
    *
-   * @param {string} user The user who recieved the medal.
-   * @param {string} location The location of the medal.
-   * @param {string} type The type of the medal.
-   * @param {string} data The data of the medal.
-   * @returns {MedalInterface} The medal created.
+   * @returns {MedalInterface} The Medal created.
    */
   async create(
     user: string,
     location: string,
     type: string,
     data: string,
+    created = new Date(),
   ): Promise<MedalInterface> {
     return this._create({
       user,
       location,
       type,
       data,
+      created,
     });
   }
 

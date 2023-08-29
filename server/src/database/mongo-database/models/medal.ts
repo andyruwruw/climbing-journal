@@ -6,26 +6,24 @@ import {
 
 const schema = new Schema({
   user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
   location: {
-    type: Schema.Types.ObjectId,
-    ref: 'Location',
-    required: false,
+    type: String,
+    default: '',
   },
   type: {
     type: String,
-    required: true,
+    required: '',
   },
   data: {
     type: String,
-    required: true,
+    default: '',
   },
   created: {
     type: Date,
-    default: Date.now,
+    required: Date.now,
   },
 });
 

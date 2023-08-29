@@ -15,6 +15,7 @@ import { Handler } from '../handler';
 import {
   ClimbingRequest,
   ClimbingResponse,
+  DatabaseColumnTypes,
 } from '../../types';
 
 /**
@@ -43,7 +44,7 @@ export class RegisterHandler extends Handler {
         weight = -1,
         image = '',
         privacy = 'public',
-      } = req.body;
+      } = req.query;
 
       // Are the required fields provided?
       if (!name) {
@@ -66,9 +67,10 @@ export class RegisterHandler extends Handler {
       }
 
       // Check for duplicate username.
-      const existing = await Handler.database.user.findOne({ username });
+      const existing = await Handler.database.user.findOne({ username: username as unknown as string });
 
       if (existing) {
+        console.log('exists');
         res.status(400).send({
           error: MESSAGE_CREATE_HANDLER_DUPLICATE_ENTRY_ERROR('user', 'username', username),
         });
@@ -89,6 +91,7 @@ export class RegisterHandler extends Handler {
       );
 
       if (!user) {
+        console.log('no user created)');
         res.status(500).send({
           error: MESSAGE_INTERNAL_SERVER_ERROR,
         });
@@ -107,6 +110,7 @@ export class RegisterHandler extends Handler {
       );
 
       if (!completed) {
+        console.log('not created)');
         res.status(500).send({
           error: MESSAGE_INTERNAL_SERVER_ERROR,
         });

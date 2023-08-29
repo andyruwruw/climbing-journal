@@ -1,13 +1,12 @@
 // Local Imports
 import { DataAccessObject } from './dao';
-import { generateEmptyMaxSends } from '../../../config';
 
 // Types
 import {
   Session as SessionInterface,
   DataAccessObject as DataAccessObjectInterface,
-  MaxSends,
-  SessionFocus,
+  UserSends,
+  RouteType,
 } from '../../../types';
 
 /**
@@ -19,41 +18,41 @@ export class Session
   /**
    * Creates a Session in the Database.
    *
-   * @param {string} user The user who created the session.
-   * @param {string} location The location of the session.
-   * @param {Date} start The start time of the session.
-   * @param {number} duration The duration of the session.
-   * @param {string} notes The notes for the session.
-   * @param {number} ability The ability of the user.
-   * @param {number} felt The felt of the user.
-   * @param {SessionFocus[]} focus The focus of the session.
-   * @param {MaxSends} max The max sends of the session.
-   * @param {string[]} images The images of the session.
-   * @returns {SessionInterface} The session created.
+   * @returns {SessionInterface} The Session created.
    */
   async create(
     user: string,
-    location: string,
     start: Date,
+    end: Date,
+    date = new Date(),
     duration: number,
-    notes: string,
-    ability: number,
-    felt: number,
-    focus: SessionFocus[] = [],
-    max: MaxSends = generateEmptyMaxSends(),
+    location: string,
     images: string[] = [],
+    videos: string[] = [],
+    state: string,
+    indoors = false,
+    max: UserSends = {},
+    felt = -1,
+    sends: UserSends = {},
+    notes = '',
+    focuses: RouteType[] = [],
   ): Promise<SessionInterface> {
     return this._create({
       user,
-      location,
       start,
+      end,
+      date,
       duration,
-      notes,
-      ability,
-      felt,
-      focus,
-      max,
+      location,
       images,
+      videos,
+      state,
+      indoors,
+      max,
+      felt,
+      sends,
+      notes,
+      focuses,
     });
   }
 }

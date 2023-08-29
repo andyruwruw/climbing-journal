@@ -26,7 +26,7 @@ export class Follow
    */
   async create(
     user: string,
-    following: string
+    following: string,
   ): Promise<FollowInterface> {
     return this._create({
       user,

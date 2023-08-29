@@ -3,7 +3,7 @@ import { DataAccessObject } from './dao';
 
 // Types
 import {
-  User as UserInterface,
+  PrivateUser as UserInterface,
   DataAccessObject as DataAccessObjectInterface,
   UserPrivacy,
 } from '../../../types';
@@ -17,36 +17,31 @@ export class User
   /**
    * Creates a User in the Database.
    *
-   * @param {string} name The name of the user.
-   * @param {string} username The username of the user.
-   * @param {string} password The password of the user.
-   * @param {Date} started The date the user started climbing.
-   * @param {number} height The height of the user.
-   * @param {number} span The span of the user.
-   * @param {number} weight The weight of the user.
-   * @param {string} image URL to user image.
-   * @param {string} privacy User's privacy settings.
-   * @returns {UserInterface} The user created.
+   * @returns {UserInterface} The User created.
    */
   async create(
     name: string,
     username: string,
     password: string,
-    started: Date,
-    height: number = -1,
-    span: number = -100,
-    weight: number = -1,
+    admin = false,
+    started =  new Date(0),
+    height = 0,
+    span = -100,
+    weight = 0,
+    created = new Date(),
     image = '',
-    privacy = 'public' as UserPrivacy,
+    privacy: UserPrivacy = 'unlisted',
   ): Promise<UserInterface> {
     return this._create({
       name,
       username,
       password,
+      admin,
       started,
       height,
-      weight,
       span,
+      weight,
+      created,
       image,
       privacy,
     });

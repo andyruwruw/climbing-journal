@@ -8,31 +8,29 @@ import {
 } from '../../../types';
 
 /**
- * Data access object for Location Ratings.
+ * Data access object for LocationRatings.
  */
 export class LocationRating
   extends DataAccessObject<LocationRatingInterface>
   implements DataAccessObjectInterface<LocationRatingInterface> {
   /**
-   * Creates a Location Rating in the Database.
+   * Creates a LocationRating in the Database.
    *
-   * @param {string} user The user who created the rating.
-   * @param {string} location The location being rated.
-   * @param {string} [notes = ''] The notes for the rating.
-   * @param {number} rating The rating.
-   * @returns {LocationRatingInterface} The location rating created.
+   * @returns {LocationRatingInterface} The LocationRating created.
    */
   async create(
     user: string,
     location: string,
+    notes: string,
     rating: number,
-    notes: string = '',
+    updated: Date,
   ): Promise<LocationRatingInterface> {
     return this._create({
       user,
       location,
       notes,
       rating,
+      updated,
     });
   }
 }

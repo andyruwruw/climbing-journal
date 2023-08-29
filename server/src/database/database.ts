@@ -7,8 +7,10 @@ import {
   Medal,
   Session,
   Token,
-  User,
   DataAccessObject as DataAccessObjectInterface,
+  PrivateUser,
+  Log,
+  Route,
 } from '../types';
 import { DataAccessObject } from './dao';
 import { UsedAbstractDatabaseError } from '../errors/used-abstract-database-error';
@@ -33,9 +35,19 @@ export class Database {
   locationRating: DataAccessObjectInterface<LocationRating> = new DataAccessObject();
 
   /**
+   * Data access object for Logs.
+   */
+  log: DataAccessObjectInterface<Log> = new DataAccessObject();
+  
+  /**
    * Data access object for Medals.
    */
   medal: DataAccessObjectInterface<Medal> = new DataAccessObject();
+
+  /**
+   * Data access object for Routes.
+   */
+  route: DataAccessObjectInterface<Route> = new DataAccessObject();
 
   /**
    * Data access object for Sessions.
@@ -50,7 +62,7 @@ export class Database {
   /**
    * Data access object for Users.
    */
-  user: DataAccessObjectInterface<User> = new DataAccessObject();
+  user: DataAccessObjectInterface<PrivateUser> = new DataAccessObject();
 
   /**
    * Connects to database.

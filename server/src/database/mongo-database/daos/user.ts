@@ -1,6 +1,5 @@
 // Packages
 import { Model } from 'mongoose';
-import bcrypt from 'bcrypt';
 
 // Local Imports
 import { UserModel } from '../models';
@@ -8,11 +7,10 @@ import { DataAccessObject } from './dao';
 
 // Types
 import {
-  User as UserInterface,
+  PrivateUser as UserInterface,
   DataAccessObject as DataAccessObjectInterface,
   UserPrivacy,
 } from '../../../types';
-import { SALT_WORK_FACTOR } from '../../../config';
 
 /**
  * Data access object for Users.
@@ -23,44 +21,31 @@ export class User
   /**
    * Creates a User in the Database.
    *
-   * @param {string} name The name of the user.
-   * @param {string} username The username of the user.
-   * @param {string} password The password of the user.
-   * @param {Date} started The date the user started climbing.
-   * @param {number} height The height of the user.
-   * @param {number} span The span of the user.
-   * @param {number} weight The weight of the user.
-   * @param {string} image URL to user image.
-   * @param {string} privacy User's privacy settings.
-   * @returns {UserInterface} The user created.
+   * @returns {UserInterface} The User created.
    */
   async create(
     name: string,
     username: string,
     password: string,
-    started: Date,
-    height = -1,
+    admin = false,
+    started =  new Date(0),
+    height = 0,
     span = -100,
-    weight = -1,
+    weight = 0,
+    created = new Date(),
     image = '',
-    privacy = 'public' as UserPrivacy,
+    privacy: UserPrivacy = 'unlisted',
   ): Promise<UserInterface> {
-    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-
-    // hash the password along with our new salt
-    const hash = await bcrypt.hash(
-      password,
-      salt,
-    );
-
     return this._create({
       name,
       username,
-      password: hash,
+      password,
+      admin,
       started,
       height,
-      weight,
       span,
+      weight,
+      created,
       image,
       privacy,
     });

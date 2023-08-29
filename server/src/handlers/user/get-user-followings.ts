@@ -10,7 +10,7 @@ import {
   ClimbingRequest,
   ClimbingResponse,
   Follow,
-  PublicUser,
+  User,
 } from '../../types';
 import { convertUserToPublic } from '../../helpers/authentication';
 
@@ -44,12 +44,12 @@ export class GetUserFollowingsHandler extends Handler {
       });
 
       const users = await Promise.all(
-        followings.map(async (follow: Follow): Promise<PublicUser> => {
+        followings.map(async (follow: Follow): Promise<User> => {
           const user = await Handler.database.user.findById(
             follow.following as string,
           );
 
-          return convertUserToPublic(user) as PublicUser;
+          return convertUserToPublic(user) as User;
         }),
       );
 
