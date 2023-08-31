@@ -31,16 +31,21 @@ export class CreateLocationHandler extends Handler {
     try {
       const {
         name,
-        locale = '',
-        address = '',
-        outdoors = false,
-        image = '',
+        state,
+        href = {},
+        indoors = false,
       } = req.body;
 
       // Are the required fields provided?
       if (!name) {
         res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('location', 'name'),
+        });
+        return;
+      }
+      if (!state) {
+        res.status(400).send({
+          error: MESSAGE_HANDLER_PARAMETER_MISSING('location', 'state'),
         });
         return;
       }
@@ -68,10 +73,9 @@ export class CreateLocationHandler extends Handler {
 
       const location = await Handler.database.location.create(
         name,
-        locale,
-        address,
-        outdoors,
-        image,
+        state,
+        href,
+        indoors,
       );
 
       if (!location) {

@@ -6,22 +6,24 @@ import {
 
 const schema = new Schema({
   user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
   location: {
-    type: Schema.Types.ObjectId,
-    ref: 'Location',
+    type: String,
     required: true,
   },
   notes: {
     type: String,
-    default: '',
+    required: '',
   },
   rating: {
     type: Number,
-    default: 10,
+    default: -1,
+  },
+  updated: {
+    type: Date,
+    required: Date.now,
   },
 });
 

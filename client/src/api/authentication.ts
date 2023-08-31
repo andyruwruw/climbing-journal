@@ -44,9 +44,14 @@ export const login = async (
   password: string,
 ): Promise<User | ErrorResponse> => {
   try {
-    const response = await request.post('/authentication/login', {
-      username,
-      password,
+    console.log(username, password);
+    const response = await request({
+      method: 'PUT',
+      url: '/authentication/login',
+      params: {
+        username,
+        password,
+      },
     });
 
     if (response.status === 201) {
@@ -104,16 +109,20 @@ export const register = async (
   privacy = 'unlisted' as UserPrivacy,
 ): Promise<User | ErrorResponse> => {
   try {
-    const response = await request.put('/authentication/register', {
-      name,
-      username,
-      password,
-      started,
-      height,
-      span,
-      weight,
-      image,
-      privacy,
+    const response = await request({
+      method: 'POST',
+      url: '/authentication/register',
+      params: {
+        name,
+        username,
+        password,
+        started,
+        height,
+        span,
+        weight,
+        image,
+        privacy,
+      },
     });
 
     if (response.status === 201) {

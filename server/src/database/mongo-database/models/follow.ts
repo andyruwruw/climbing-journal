@@ -6,18 +6,16 @@ import {
 
 const schema = new Schema({
   user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
   following: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
   created: {
     type: Date,
-    default: Date.now,
+    required: Date.now,
   },
 });
 

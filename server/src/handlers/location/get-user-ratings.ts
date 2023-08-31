@@ -6,6 +6,7 @@ import {
 } from '../../config/messages';
 import { validate } from '../../helpers/authentication';
 import { Handler } from '../handler';
+import { USER_PRIVACY } from '../../config';
 
 // Types
 import {
@@ -14,9 +15,9 @@ import {
 } from '../../types';
 
 /**
- * Handler for deleting an existing session.
+ * Handler for creating a new location.
  */
-export class DeleteSessionHandler extends Handler {
+export class GetUserRatingsHandler extends Handler {
   /**
    * Executes the handler.
    *
@@ -28,12 +29,12 @@ export class DeleteSessionHandler extends Handler {
     res: ClimbingResponse,
   ): Promise<void> {
     try {
-      const { id } = req.query;
+      const { id } = req.body;
 
       // Are the required fields provided?
       if (!id) {
         res.status(400).send({
-          error: MESSAGE_HANDLER_PARAMETER_MISSING('session', 'id'),
+          error: MESSAGE_HANDLER_PARAMETER_MISSING('user', 'id'),
         });
         return;
       }
@@ -43,28 +44,23 @@ export class DeleteSessionHandler extends Handler {
         Handler.database,
       );
 
-      if (!user) {
-        res.status(400).send({
-          error: MESSAGE_UNAUTHORIZED,
-        });
-        return;
-      }
-      
-      let affectedRows = 0;
+      if (user?._id !== id) {
+        const retrievedUser = await Handler.database.user.findById(id);
 
-      if (user.admin) {
-        affectedRows = await Handler.database.location.delete({
-          _id: id as string,
-        });
-      } else {
-        affectedRows = await Handler.database.location.delete({
-          _id: id as string,
-          user: user._id as string,
-        });
+        if (retrievedUser?.privacy === USER_PRIVACY.PRIVATE) {
+          res.status(400).send({
+            error: MESSAGE_UNAUTHORIZED,
+          });
+          return;
+        }
       }
+
+      const ratings = await Handler.database.locationRating.find({
+        user: id,
+      });
 
       res.status(200).send({
-        affectedRows,
+        ratings,
       });
     } catch (error) {
       console.log(error);

@@ -20,17 +20,17 @@ export class Token
   /**
    * Creates a Token in the Database.
    *
-   * @param {string} user The user who created the token.
-   * @param {string} token The token.
-   * @returns {TokenInterface} The token created.
+   * @returns {TokenInterface} The Token created.
    */
   async create(
     user: string,
     token: string,
+    created = new Date(),
   ): Promise<TokenInterface> {
     return this._create({
       user,
-      token
+      token,
+      created,
     });
   }
 

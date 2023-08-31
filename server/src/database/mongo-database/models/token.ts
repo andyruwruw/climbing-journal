@@ -6,14 +6,15 @@ import {
 
 const schema = new Schema({
   user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
+
   token: {
     type: String,
     required: true,
   },
+
   created: {
     type: Date,
     default: Date.now,

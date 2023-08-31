@@ -30,21 +30,38 @@ export class CreateSessionHandler extends Handler {
   ): Promise<void> {
     try {
       const {
+        date,
         start,
-        location = 'Unknown',
+        end,
         duration = 0,
-        ability = 5,
-        felt = 5,
-        focus = [],
-        max = generateEmptyMaxSends(),
         images = [],
+        videos = [],
+        location = '',
+        state = '',
+        indoors = false,
+        max = generateEmptyMaxSends(),
+        felt = 0,
+        sends = generateEmptyMaxSends(),
         notes = '',
+        focuses = [],
       } = req.body;
 
       // Are the required fields provided?
+      if (!date) {
+        res.status(400).send({
+          error: MESSAGE_HANDLER_PARAMETER_MISSING('session', 'date'),
+        });
+        return;
+      }
       if (!start) {
         res.status(400).send({
           error: MESSAGE_HANDLER_PARAMETER_MISSING('session', 'start'),
+        });
+        return;
+      }
+      if (!end) {
+        res.status(400).send({
+          error: MESSAGE_HANDLER_PARAMETER_MISSING('session', 'end'),
         });
         return;
       }
@@ -68,22 +85,25 @@ export class CreateSessionHandler extends Handler {
       if (!existing) {
         existing = await Handler.database.location.create(
           location,
-          '',
-          '',
         );
       }
 
       const session = await Handler.database.session.create(
         user._id,
-        existing._id,
         start,
+        end,
+        date,
         duration,
-        notes,
-        ability,
-        felt,
-        focus,
-        max,
+        existing._id,
         images,
+        videos,
+        state,
+        indoors,
+        max,
+        felt,
+        sends,
+        notes,
+        focuses,
       );
 
       if (!session) {

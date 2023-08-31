@@ -11,8 +11,8 @@ import { Handler } from '../handler';
 import {
   ClimbingRequest,
   ClimbingResponse,
-  MaxSends,
   UpdateQuery,
+  UserSends,
 } from '../../types';
 
 /**
@@ -32,15 +32,20 @@ export class EditSessionHandler extends Handler {
     try {
       const {
         id,
+        date = null as Date | null,
         start = null as Date | null,
-        location = null as string | null,
-        duration = null as number | null,
-        ability = null as number | null,
-        felt = null as number | null,
-        focus = null as string[] | null,
-        max = null as MaxSends | null,
+        end = null as Date | null,
+        duration = null as Number | null,
         images = null as string[] | null,
+        videos = null as string[] | null,
+        location = null as string | null,
+        state = null as string | null,
+        indoors = null as boolean | null,
+        max = null as UserSends | null,
+        felt = null as Number | null,
+        sends = null as UserSends | null,
         notes = null as string | null,
+        focuses = null as string[] | null,
       } = req.body;
 
       // Are the required fields provided?
@@ -65,32 +70,59 @@ export class EditSessionHandler extends Handler {
 
       const update = {} as UpdateQuery;
 
+      if (date !== null) {
+        update.date = date;
+      }
       if (start !== null) {
         update.start = start;
       }
-      if (location !== null) {
-        update.location = location;
+      if (end !== null) {
+        update.end = end;
       }
       if (duration !== null) {
         update.duration = duration;
       }
-      if (ability !== null) {
-        update.ability = ability;
-      }
-      if (felt !== null) {
-        update.felt = felt;
-      }
-      if (focus !== null) {
-        update.focus = focus;
-      }
       if (images !== null) {
         update.images = images;
+      }
+      if (videos !== null) {
+        update.videos = videos;
+      }
+      if (state !== null) {
+        update.state = state;
+      }
+      if (location !== null) {
+        update.location = location;
+      }
+      if (indoors !== null) {
+        update.indoors = indoors;
       }
       if (max !== null) {
         update.max = max;
       }
+      if (felt !== null) {
+        update.felt = felt;
+      }
+      if (sends !== null) {
+        update.sends = sends;
+      }
       if (notes !== null) {
         update.notes = notes;
+      }
+      if (focuses !== null) {
+        update.focuses = focuses;
+      }
+
+      const existing = await Handler.database.session.findOne({
+        _id: id,
+        user: user._id as string
+      });
+
+      if (!existing) {
+        res.status(400).send({
+          error: MESSAGE_UNAUTHORIZED,
+        });
+        return;
       }
 
       const success = await Handler.database.session.updateOne({

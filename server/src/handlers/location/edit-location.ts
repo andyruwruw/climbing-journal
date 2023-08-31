@@ -31,11 +31,10 @@ export class EditLocationHandler extends Handler {
     try {
       const {
         id,
-        name = null as string | null,
-        locale = null as string | null,
-        address = null as string | null,
-        outdoors = null as boolean | null,
-        image = null as string | null,
+        name = '',
+        state = '',
+        href = {},
+        indoors = false,
       } = req.body;
 
       // Are the required fields provided?
@@ -63,17 +62,14 @@ export class EditLocationHandler extends Handler {
       if (name !== null) {
         update.name = name;
       }
-      if (locale !== null) {
-        update.locale = locale;
+      if (state !== null) {
+        update.state = state;
       }
-      if (address !== null) {
-        update.address = address;
+      if (href !== null) {
+        update.href = href;
       }
-      if (outdoors !== null) {
-        update.outdoors = outdoors;
-      }
-      if (image !== null) {
-        update.image = image;
+      if (indoors !== null) {
+        update.indoors = indoors;
       }
 
       const success = await Handler.database.location.updateOne({

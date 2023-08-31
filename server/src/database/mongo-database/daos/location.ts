@@ -20,26 +20,19 @@ export class Location
   /**
    * Creates a Location in the Database.
    *
-   * @param {string} name The name of the location.
-   * @param {string} [locale = ''] The local of the location.
-   * @param {string} [address = ''] The address of the location.
-   * @param {boolean} [outdoors = false] Whether the location is outdoors.
-   * @param {string} [image = ''] The image for the location.
-   * @returns {LocationInterface} The location created.
+   * @returns {LocationInterface} The Location created.
    */
   async create(
     name: string,
-    locale = '',
-    address = '',
-    outdoors = false,
-    image = '',
+    href: Record<string, string> = {},
+    indoors = false,
+    state = '',
   ): Promise<LocationInterface> {
     return this._create({
       name,
-      locale,
-      address,
-      outdoors,
-      image,
+      href,
+      indoors,
+      state,
     });
   }
 

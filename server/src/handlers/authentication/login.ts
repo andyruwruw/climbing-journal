@@ -33,9 +33,9 @@ export class LoginHandler extends Handler {
   ): Promise<void> {
     try {
       const {
-        username,
-        password,
-      } = req.body;
+        username = null,
+        password = null,
+      } = req.query;
 
       // Are the required fields provided?
       if (!username) {
@@ -51,7 +51,9 @@ export class LoginHandler extends Handler {
         return;
       }
 
-      const user = await Handler.database.user.findOne({ username });
+      const user = await Handler.database.user.findOne({
+        username: username as string,
+      });
 
       if (!user) {
         res.status(400).send({
@@ -62,7 +64,7 @@ export class LoginHandler extends Handler {
 
       const passwordsMatch = await comparePassword(
         user.password as string,
-        password,
+        password as string,
       );
 
       if (!passwordsMatch) {
@@ -97,12 +99,9 @@ export class LoginHandler extends Handler {
       res.status(201).send({
         user: convertUserToPublic(user),
       });
+      return;
     } catch (error) {
       console.log(error);
-
-      res.status(500).send({
-        error: MESSAGE_INTERNAL_SERVER_ERROR,
-      });
     }
   }
 }

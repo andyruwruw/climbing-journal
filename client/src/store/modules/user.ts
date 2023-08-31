@@ -168,6 +168,8 @@ const actions: ActionTree<AuthModuleState, any> = {
         privacy,
       );
 
+      console.log(user);
+
       if (!('message' in user)) {
         commit('setUser', user);
         dispatch('sessions/loadSessions', undefined, { root: true });

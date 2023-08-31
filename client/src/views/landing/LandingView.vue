@@ -1,12 +1,5 @@
 <template>
   <div :class="$style.component">
-    <climbing-hold />
-
-    <climbing-hold />
-
-    <climbing-hold />
-
-    <climbing-hold />
   </div>
 </template>
 
@@ -15,15 +8,10 @@
 import Vue from 'vue';
 
 // Local Imports
-import ClimbingHold from '@/components/ui/accents/ClimbingHold.vue';
 import { mapActions } from 'vuex';
 
 export default Vue.extend({
   name: 'LandingView',
-
-  components: {
-    ClimbingHold,
-  },
 
   created() {
     this.handlePageLoad({ name: this.$route.name });
