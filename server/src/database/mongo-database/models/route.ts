@@ -5,13 +5,13 @@ import {
 } from 'mongoose';
 
 const schema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   type: {
     type: String,
     default: 'boulder',
+  },
+  multiPitch: {
+    type: Boolean,
+    default: false,
   },
   location: {
     type: String,
@@ -19,13 +19,13 @@ const schema = new Schema({
   },
   state: {
     type: String,
-    required: true,
+    default: 'CA',
   },
   area: {
     type: String,
     default: '',
   },
-  wall: {
+  subArea: {
     type: String,
     default: '',
   },
@@ -35,23 +35,27 @@ const schema = new Schema({
   },
   grade: {
     type: Number,
-    default: -2,
+    default: -1,
   },
-  subgrade: {
+  subGrade: {
     type: Number,
-    default: -2,
+    default: 0,
   },
   danger: {
     type: Number,
     default: 0,
   },
-  rated: {
-    type: Number,
-    default: -1,
+  rating: {
+    type: Object,
+    default: {},
   },
   updated: {
-    type: Date,
-    default: Date.now,
+    type: Number,
+    default: Date.now(),
+  },
+  media: {
+    type: [Object],
+    default: [],
   },
 });
 

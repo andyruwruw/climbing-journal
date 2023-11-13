@@ -7,9 +7,8 @@ import { DataAccessObject } from './dao';
 
 // Types
 import {
-  PrivateUser as UserInterface,
-  DataAccessObject as DataAccessObjectInterface,
-  UserPrivacy,
+  User as UserInterface,
+  DataAccessObjectInterface,
 } from '../../../types';
 
 /**
@@ -18,39 +17,6 @@ import {
 export class User
   extends DataAccessObject<UserInterface>
   implements DataAccessObjectInterface<UserInterface> {
-  /**
-   * Creates a User in the Database.
-   *
-   * @returns {UserInterface} The User created.
-   */
-  async create(
-    name: string,
-    username: string,
-    password: string,
-    admin = false,
-    started =  new Date(0),
-    height = 0,
-    span = -100,
-    weight = 0,
-    created = new Date(),
-    image = '',
-    privacy: UserPrivacy = 'unlisted',
-  ): Promise<UserInterface> {
-    return this._create({
-      name,
-      username,
-      password,
-      admin,
-      started,
-      height,
-      span,
-      weight,
-      created,
-      image,
-      privacy,
-    });
-  }
-
   /**
    * Retrieves mongoose Model for DataAccessObject.
    */

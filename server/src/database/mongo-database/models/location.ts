@@ -9,17 +9,33 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  href: {
-    type: Object,
-    required: {},
-  },
-  indoors: {
+  outdoors: {
     type: Boolean,
     default: false,
   },
   state: {
     type: String,
-    required: true,
+    default: 'CA',
+  },
+  address: {
+    type: String,
+    default: '',
+  },
+  color: {
+    type: String,
+    default: '',
+  },
+  href: {
+    type: Object,
+    default: {},
+  },
+  media: {
+    type: [Object],
+    default: [],
+  },
+  updated: {
+    type: Number,
+    default: Date.now(),
   },
 });
 

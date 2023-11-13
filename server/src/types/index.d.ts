@@ -31,6 +31,316 @@ interface ExternalHref {
    * Google maps link of item..
    */
   googleMaps?: string;
+
+  website?: string;
+
+  eightA?: string;
+
+  sendage?: string;
+}
+
+type MediaType = 'image' | 'video' | 'link';
+
+interface Media {
+  type: MediaType;
+
+  href: string;
+
+  caption: string;
+
+  date: number;
+}
+
+type AttemptState = 'attempt' | 'top-roped' | 'lead' | 'trad' | 'hung' | 'flash' | 'send' | 'day-flash' | 'onsight' | 'ice' | 'project' | 'touch' | 'unknown';
+
+interface Attempt extends DatabaseItem {
+  user: string;
+
+  date: number;
+
+  route: string;
+
+  status: AttemptState;
+
+  notes: string;
+
+  updated: number;
+
+  media: Media[];
+}
+
+interface Follow {
+  user: string;
+
+  following: string;
+
+  updated: number;
+}
+
+type InterestStatue = 'project' | 'visit' | 'clean';
+
+interface Interest extends DatabaseItem {
+  user: string;
+
+  date: number;
+
+  route: string;
+
+  status: InterestStatue;
+
+  notes: string;
+}
+
+interface Location extends DatabaseItem {
+  name: string;
+
+  outdoors: boolean;
+
+  state: string;
+
+  address: string;
+
+  color: string;
+
+  href: ExternalHref;
+
+  media: Media[];
+
+  updated: number;
+}
+
+interface Medal extends DatabaseItem {
+  user: string;
+
+  type: string;
+
+  data: string;
+
+  updated: number;
+}
+
+interface Rating extends DatabaseItem {
+  user: string;
+
+  route: string;
+
+  suggestedGrade: number;
+
+  suggestedSubGrade: number;
+
+  rating: number;
+
+  status: AttemptState;
+
+  updated: number;
+}
+
+interface Review extends DatabaseItem {
+  user: string;
+
+  location: string;
+
+  rating: number;
+
+  notes: string;
+
+  updated: number;
+}
+
+interface Route extends DatabaseItem {
+  type: string;
+
+  multiPitch: boolean;
+
+  location: string;
+
+  state: string;
+
+  area: string;
+
+  subArea: string;
+
+  href: ExternalHref;
+
+  grade: number;
+
+  subGrade: number;
+
+  danger: number;
+
+  rating: number;
+
+  updated: number;
+
+  media: Media[];
+}
+
+interface Session extends DatabaseItem {
+  user: string;
+
+  location: string;
+
+  date: number;
+
+  start: number;
+
+  end: number;
+
+  duration: number;
+
+  subAreas: string[];
+
+  state: string;
+  
+  bouldering: boolean;
+
+  sport: boolean;
+
+  trad: boolean;
+
+  topRope: boolean;
+
+  aid: boolean;
+
+  ice: boolean;
+
+  mixed: boolean;
+
+  alpine: boolean;
+
+  outdoor: boolean;
+
+  felt: number;
+
+  maxBoulder: number;
+
+  maxBoulderSubGrade: number;
+
+  maxSport: number;
+
+  maxSportSubGrade: number;
+
+  maxTrad: number;
+
+  maxTradSubGrade: number;
+
+  maxTopRope: number;
+
+  maxTopRopeSubGrade: number;
+
+  maxAid: number;
+
+  maxAidSubGrade: number;
+
+  maxIce: number;
+
+  maxIceSubGrade: number;
+
+  maxMixed: number;
+
+  maxMixedSubGrade: number;
+
+  maxAlpine: number;
+
+  maxAlpineSubGrade: number;
+
+  notes: string;
+
+  partners: string[];
+
+  media: Media[];
+
+  updated: number;
+}
+
+type ShoesStatus = 'new' | 'used' | 'worn' | 'hole' | 'resoled' | 'retired';
+
+interface Shoes extends DatabaseItem {
+  user: string;
+
+  date: number;
+
+  brand: string;
+
+  model: string;
+
+  volume: string;
+
+  sizeUS: number;
+
+  sizeEUR: number;
+
+  status: ShoesStatus;
+
+  resoled: boolean;
+
+  resoleDate: number;
+
+  resoleRubber: string;
+
+  notes: string;
+
+  updated: number;
+}
+
+interface Token {
+  user: string;
+
+  token: string;
+
+  created: number;
+}
+
+interface Post extends DatabaseItem {
+  user: string;
+
+  date: number;
+
+  route: string;
+
+  location: string;
+
+  type: string;
+
+  privacy: string;
+}
+
+type PrivacyStatus = 'public' | 'unlisted' | 'private';
+
+interface User extends DatabaseItem {
+  username: string;
+
+  password: string;
+
+  displayName: string;
+
+  max: UserSends;
+
+  email: string;
+
+  image: string;
+
+  admin: boolean;
+
+  created: number;
+
+  started: number;
+
+  home: string;
+
+  height: number;
+
+  span: number;
+
+  weight: number;
+
+  age: string;
+
+  privacy: PrivacyStatus;
+
+  attemptPrivacy: PrivacyStatus;
+
+  sessionPrivacy: PrivacyStatus;
 }
 
 /**
@@ -122,485 +432,340 @@ interface UserSends {
   outdoorMixedSubgrade?: number;
 }
 
+type RouteType = 'boulder' | 'multi-pitch' | 'top-rope' | 'lead' | 'trad' | 'ice' | 'mixed' | 'aid' | 'other';
+export interface DatabaseRow {
+  /**
+   * Database Unique Identifier.
+   */
+  _id?: string;
+}
+
 /**
- * Database session log.
+ * Database column types.
  */
-interface Session extends DatabaseItem {
-  /**
-   * User of session.
-   */
-  user: string;
+export type DatabaseColumnTypes = string | number | boolean | any[] | null | undefined;
 
-  /**
-   * Date of session.
-   */
-  date: Date;
+export interface AdvancedQuery {
+  $eq?: DatabaseColumnTypes;
 
+  $gt?: DatabaseColumnTypes;
+
+  $gte?: DatabaseColumnTypes;
+
+  $in?: DatabaseColumnTypes[];
+
+  $lt?: DatabaseColumnTypes;
+
+  $lte?: DatabaseColumnTypes;
+
+  $ne?: DatabaseColumnTypes;
+
+  $nin?: DatabaseColumnTypes[];
+
+  $not?: AdvancedQuery;
+
+  $exists?: boolean;
+
+  $type?: string | string[];
+
+  $mod?: [number, number];
+
+  $regex?: RegExp;
+
+  $options?: string;
+
+  $all?: DatabaseColumnTypes[];
+
+  $elemMatch?: AdvancedQuery;
+
+  $size?: number;
+}
+
+export interface JSONQuery {
+  required?: string[];
+
+  properties?: Dictionary<JSONQuery>;
+
+  bsonType?: string;
+
+  description?: string;
+}
+
+export interface TextQuery {
+  $search: string;
+
+  $language?: string;
+
+  $caseSensitive?: boolean;
+
+  $diacriticSensitive?: boolean;
+}
+
+/**
+ * Object defining a query filter.
+ */
+export interface QueryConditions {
+  [key: string]: DatabaseColumnTypes | AdvancedQuery;
+
+  $and?: QueryConditions[];
+
+  $nor?: QueryConditions[];
+
+  $or?: QueryConditions[];
+
+  $expr?: AdvancedQuery;
+
+  $jsonSchema?: JSONQuery;
+
+  $text?: TextQuery;
+
+  $where?: () => boolean;
+}
+
+export interface AdvancedUpdate {
+  $each?: DatabaseColumnTypes[];
+}
+
+/**
+ * Object defining a query update.
+ */
+export interface QueryUpdate {
+  [key: string]: DatabaseColumnTypes | AdvancedUpdate | QueryUpdate;
+
+  $addToSet?: QueryUpdate;
+
+  $pop?: QueryUpdate;
+
+  $pull?: QueryUpdate;
+
+  $push?: QueryUpdate;
+
+  $sort?: QueryConditions;
+
+  $inc?: QueryUpdate;
+
+  $min?: QueryUpdate;
+
+  $max?: QueryUpdate;
+
+  $mul?: QueryUpdate;
+
+  $setOnInsert?: QueryUpdate;
+}
+
+/**
+ * Object defining how to sort results.
+ */
+export interface QuerySort {
+  [key: string]: number;
+}
+
+/**
+ * Update defining a query projection.
+ */
+export interface QueryProjection {
+  [key: string]: boolean;
+}
+
+interface MariaDBQuery {
+  namedPlaceholders: boolean;
+  sql: string;
+}
+
+interface MariaDbParams {
+  [key: string]: string | number | boolean | null;
+}
+
+export type MariaDbQuery = Array<IMariaDBQuery | IMariaDbParams>;
+
+/**
+ * SQL Column Types.
+ */
+export type SqlColumnTypes = `int(${number})` | 'bigint' | 'smallint' | `varchar(${number})` | `decimal(${number},${number})` | 'text' | 'boolean';
+
+/**
+ * Column values references to external tables.
+ */
+export interface ColumnReference {
   /**
-   * Starting time of session.
+   * Table linked.
    */
-  start: Date;
+  table: string;
   
   /**
-   * End of session.
+   * Key in the table it links to.
    */
-  end: Date;
+  primaryKey: string;
 
   /**
-   * Total duration of session.
+   * Whether to delete this item if reference is destroyed.
    */
-  duration: number;
-
-  /**
-   * Images from session.
-   */
-  images: string[];
-
-  /**
-   * Videos from session.
-   */
-  videos: string[];
-
-  /**
-   * Location of session.
-   */
-  location: string;
-
-  /**
-   * State of session.
-   */
-  state: string;
-
-  /**
-   * Whether the session was indoors.
-   */
-  indoors: boolean;
-
-  /**
-   * Max sends of user at time of session.
-   */
-  max?: UserSends;
-
-  /**
-   * How the day felt.
-   */
-  felt: number;
-
-  /**
-   * Top sends of the day.
-   */
-  sends?: UserSends;
-
-  /**
-   * Notes about the session.
-   */
-  notes: string;
-
-  /**
-   * Climbing types.
-   */
-  focuses: RouteType[];
-}
-type SessionReference = string | Session;
-
-type AttemptStatus = 'sent' | 'attempt' | 'flash' | 'onsight' | 'top-rope' | 'lead' | 'trad' | 'ice' | 'mixed' | 'aid' | 'other' | 'one-hang' | 'project' | 'touch' | 'day-flash' | 'unknown';
-
-/**
- * Log of attempt on route.
- */
-interface Log extends DatabaseItem {
-  /**
-   * User on route.
-   */
-  user: string;
-
-  /**
-   * Route unique identifier.
-   */
-  route: String;
-
-  /**
-   * Date attempted.
-   */
-  date: Date;
-
-  /**
-   * Images from session.
-   */
-  images: string[];
-
-  /**
-   * Videos from session.
-   */
-  videos: string[];
-
-  /**
-   * Status of attempt.
-   */
-  status: AttemptStatus;
-
-  /**
-   * Number of attempts.
-   */
-  attempts: number;
-
-  /**
-   * Notes on route.
-   */
-  notes: string;
-
-  /**
-   * How the route felt.
-   */
-  felt: number;
-
-  /**
-   * Self grade of route.
-   */
-  rating: number;
-}
-type LogReference = string | Log;
-
-type RouteType = 'boulder' | 'multi-pitch' | 'top-rope' | 'lead' | 'trad' | 'ice' | 'mixed' | 'aid' | 'other';
-
-/**
- * Route logged in database.
- */
-interface Route extends DatabaseItem {
-  /**
-   * Name of the route.
-   */
-  name: string;
-
-  /**
-   * Type of climb.
-   */
-  type: RouteType;
-
-  /**
-   * Location of the route.
-   */
-  location: string;
-
-  /**
-   * State the route is in.
-   */
-  state: string;
-
-  /**
-   * Area within location.
-   */
-  area: string;
-
-  /**
-   * Wall or boulder.
-   */
-  wall: string;
-
-  /**
-   * Href to project.
-   */
-  href?: ExternalHref;
-
-  /**
-   * Grade of the route.
-   */
-  grade: number;
-
-  /**
-   * Subgrade of the route.
-   */
-  subgrade: number;
-
-  /**
-   * Danger level of route.
-   */
-  danger: number;
-
-  /**
-   * Rating for route.
-   */
-  rated: number;
-
-  /**
-   * When the route was updated.
-   */
-  updated: Date;
-}
-type RouteReference = string | Route;
-
-/**
- * Location of climbing.
- */
-interface Location extends DatabaseItem {
-  /**
-   * Name of crag.
-   */
-  name: string;
-
-  /**
-   * Hrefs to crag.
-   */
-  href: ExternalHref;
-
-  /**
-   * Whether the location is indoors.
-   */
-  indoors: boolean;
-
-  /**
-   * State of location.
-   */
-  state: string;
-
-  /**
-   * Number of hours.
-   */
-  hours?: number;
-
-  /**
-   * Number of sessions.
-   */
-  sessions?: number;
-}
-type LocationReference = string | Location;
-
-interface LocationRating extends DatabaseItem {
-  /**
-   * User who rated the location.
-   */
-  user: UserReference;
-
-  /**
-   * Location that was rated.
-   */
-  location: LocationReference;
-
-  /**
-   * Notes on the location.
-   */
-  notes: string;
-
-  /**
-   * Rating given for location.
-   */
-  rating: number;
-
-  /**
-   * Date of rating.
-   */
-  updated: Date;
-}
-type LocationRatingReference = string | LocationRating;
-
-interface Medal extends DatabaseItem {
-  /**
-   * User awardee.
-   */
-  user: UserReference;
-
-  /**
-   * Ldoation if applicable.
-   */
-  location: LocationReference | null;
-
-  /**
-   * Type of award.
-   */
-  type: string;
-
-  /**
-   * Data for award.
-   */
-  data: string;
-
-  /**
-   * Wh3n award was given.
-   */
-  created?: Date;
-}
-type MedalReference = string | Medal;
-
-/**
- * Session token.
- */
-interface Token extends DatabaseItem {
-  /**
-   * User logged in.
-   */
-  user: UserReference;
-
-  /**
-   * Login token.
-   */
-  token: string;
-
-  /**
-   * Date created.
-   */
-  created?: Date;
-}
-type TokenReference = string | Token;
-
-/**
- * User privacy settings.
- */
-type UserPrivacy = 'unlisted' | 'private' | 'public';
-
-/**
- * User object.
- */
-interface User extends DatabaseItem {
-  /**
-   * Name of user.
-   */
-  name: string;
-
-  /**
-   * Username of user.
-   */
-  username: string;
-
-  /**
-   * When the user started climbing.
-   */
-  started: Date;
-
-  /**
-   * Height of user.
-   */
-  height: number;
-
-  /**
-   * Span of the user.
-   */
-  span: number;
-
-  /**
-   * Weight of the user.
-   */
-  weight: number;
-
-  /**
-   * When the account was created.
-   */
-  created?: Date;
-
-  /**
-   * User image.
-   */
-  image: string;
-
-  /**
-   * User privacy setting.
-   */
-  privacy: UserPrivacy;
-}
-interface PrivateUser extends User {
-  /**
-   * User password.
-   */
-  password: string;
-
-  /**
-   * Whether the user is an admin.
-   */
-  admin?: boolean;
-}
-type UserReference = string | User;
-
-/**
- * User following users.
- */
-interface Follow extends DatabaseItem {
-  /**
-   * User following.
-   */
-  user: UserReference;
-
-  /**
-   * 
-   */
-  following: UserReference;
-
-  /**
-   * When the user was followed.
-   */
-  created?: Date;
-}
-type FollowReference = string | Follow;
-
-/**
- * Types of data in the database.
- */
-export type DatabaseColumnTypes = string | number | boolean | Date | string[] | number[];
-
-/**
- * Filter object used to limit queries.
- */
-export interface QueryFilter {
-  [key: string]: DatabaseColumnTypes
-  | DatabaseColumnTypes[]
-  | Record<string, DatabaseColumnTypes
-  | DatabaseColumnTypes[]>;
+  deleteOnCascade: boolean;
 }
 
 /**
- * Projection on queries to limit columns.
+ * Advanced options for SQL columns.
  */
-export type QueryProjection = Record<string, number> | string | string[];
+export interface ColumnOptions
+  extends Record<string, (boolean | number | string | null | undefined | ColumnReference)> {
+  /**
+   * Whether the column can be null.
+   */
+  notNull: boolean;
 
-/**
- * Update object used to update data in the database.
- */
-export interface UpdateQuery {
-  [key: string]: DatabaseColumnTypes | Record<string, DatabaseColumnTypes>;
+  /**
+   * Whether an int is signed or unsigned.
+   */
+  unsigned: boolean;
+
+  /**
+   * Default value.
+   */
+  default: number | string | boolean | null | undefined;
+
+  /**
+   * Whether this field is a primary key.
+   */
+  primaryKey: boolean;
+
+  /**
+   * Table this references to.
+   */
+  foreignKey: ColumnReference | null;
+
+  /**
+   * Whether to auto increment the value.
+   */
+  autoIncrement: boolean;
 }
 
-export interface DataAccessObject<T> {
-  _create: (item: T) => Promise<T>;
-  create: (...args: any[]) => Promise<T>;
+export interface MariaDbQueryTemplate {
+  namedPlaceholders: true,
+  sql: string;
+}
 
-  findOne: (
-    filter?: QueryFilter,
-    projection?: QueryProjection,
-  ) => Promise<T | null>;
+export interface MariaDbQueryParameters {
+  [key: string]: DatabaseColumnTypes;
+}
 
+export type MariaDbQuery = Array<MariaDbQueryTemplate | MariaDbQueryParameters>;
+
+export type AnnotationType = 'interval' | 'single' | 'section' | 'random' | 'continuous';
+
+/**
+ * Basic data access object.
+ */
+export interface DataAccessObjectInterface<T> {
+  /**
+   * Clears all items from the table.
+   *
+   * @returns {Promise<void>} Promise of the action.
+   */
+  clear: () => Promise<void>;
+
+  /**
+   * Not needed.
+   */
+  createTable: () => Promise<void>;
+
+  /**
+   * Deletes all items or a subset of items from the Database.
+   *
+   * @param {QueryConditions} filter The filter to apply to the query.
+   * @returns {Promise<number>} The number of items deleted.
+   */
+  delete: (conditions: QueryConditions) => Promise<number>;
+
+  /**
+   * Deletes a single item by its id from the Database.
+   *
+   * @param {string} id The id of the item.
+   * @returns {Promise<boolean>} Whether the item was deleted.
+   */
+  deleteById: (id: string) => Promise<boolean>;
+
+  /**
+   * Deletes all items from the Database.
+   */
+  deleteAll: () => Promise<void>;
+
+  /**
+   * Not needed.
+   */
+  dropTable: () => Promise<void>;
+
+  /**
+   * Finds all of the item in the Database.
+   *
+   * @param {QueryConditions} filter The filter to apply to the query.
+   * @param {QueryProjection} projection The projection to apply to the query.
+   * @returns {Promise<T[]>} The items.
+   */
   find: (
-    filter?: QueryFilter,
+    conditions?: QueryConditions,
     projection?: QueryProjection,
+    sort?: QuerySort,
     offset?: number,
     limit?: number,
   ) => Promise<T[]>;
 
-  findById: (id: string) => Promise<T | null>;
+  /**
+   * Finds an item by it's id from the Database.
+   *
+   * @param {string} id The id of the item.
+   * @returns {Promise<T | null>} The item or null if not found.
+   */
+  findById: (id: string) => Promise<T | null>
 
-  delete: (filter?: QueryFilter) => Promise<number>;
+  /**
+   * Finds one item in the Database.
+   *
+   * @param {QueryConditions} filter The filter to apply to the query.
+   * @param {QueryProjection} projection The projection to apply to the query.
+   * @returns {Promise<T | null>} The item.
+   */
+  findOne: (
+    conditions: QueryConditions,
+    projection?: QueryProjection,
+  ) => Promise<T | null>;
 
-  deleteById: (id: string) => Promise<boolean>;
+  /**
+   * Creates a new instance of the item in the Database.
+   *
+   * @param {T} options The item to create.
+   * @returns {T} The created item.
+   */
+  insert: (item: T) => Promise<number>;
 
-  updateOne: (
-    filter?: QueryFilter,
-    update?: UpdateQuery,
-    insertNew?: boolean,
-  ) => Promise<boolean>;
+  /**
+   * Pain.
+   */
+  query: (query: string | MariaDbQuery) => Promise<any>;
 
-  updateMany: (
-    filter?: QueryFilter,
-    update?: UpdateQuery,
-    insertNew?: boolean,
+  /**
+   * Updates one item in the Database matching the filter.
+   *
+   * @param {QueryConditions} filter
+   * @param {QueryUpdate} update
+   * @param {boolean} insertNew
+   * @returns {Promise<boolean>} Whether the item was updated.
+   */
+  update: (
+    conditions: QueryConditions,
+    update: QueryUpdate,
   ) => Promise<number>;
 
-  clear: () => Promise<void>;
+  /**
+   * Updates all items in the Database matching the filter.
+   *
+   * @param {QueryConditions} filter
+   * @param {QueryUpdate} update
+   * @param {boolean} insertNew
+   * @returns {Promise<number>} The number of documents updated.
+   */
+  updateMany: (
+    filter: QueryConditions = {},
+    update: QueryUpdate = {},
+    insertNew = true,
+  ) => Promise<number>;
 }
-
-export interface IHandler {
-  execute(
-    req: ClimbingRequest,
-    res: ClimbingResponse,
-  ): Promise<void>;
-}
-
-export type ClimbingRequest = VercelRequest | Request;
-
-export type ClimbingResponse = VercelResponse | Response;

@@ -5,17 +5,45 @@ import {
 } from 'mongoose';
 
 const schema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   username: {
     type: String,
     required: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
+  displayName: {
+    type: String,
+    default: '',
+  },
+  max: {
+    type: Object,
+    default: {},
+  },
+  email: {
+    type: String,
+    default: '',
+  },
+  image: {
+    type: String,
+    default: '',
+  },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
+  created: {
+    type: Number,
+    default: Date.now(),
+  },
   started: {
-    type: Date,
-    default: new Date(0),
+    type: Number,
+    default: 0,
+  },
+  home: {
+    type: String,
+    default: '',
   },
   height: {
     type: Number,
@@ -29,29 +57,21 @@ const schema = new Schema({
     type: Number,
     default: 0,
   },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  updated: {
-    type: Date,
-    default: Date.now,
-  },
-  image: {
-    type: String,
-    default: '',
+  age: {
+    type: Number,
+    default: 0,
   },
   privacy: {
     type: String,
-    default: 'unlisted',
+    default: 'public',
   },
-  admin: {
-    type: Boolean,
-    default: false,
+  attemptPrivacy: {
+    type: String,
+    default: 'public',
+  },
+  sessionPrivacy: {
+    type: String,
+    default: 'public',
   },
 });
 

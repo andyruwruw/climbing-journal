@@ -9,21 +9,17 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  location: {
-    type: String,
-    default: '',
-  },
   type: {
     type: String,
-    required: '',
+    default: '',
   },
   data: {
     type: String,
-    default: '',
+    default: '{}',
   },
-  created: {
-    type: Date,
-    required: Date.now,
+  updated: {
+    type: Number,
+    default: Date.now(),
   },
 });
 

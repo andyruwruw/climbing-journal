@@ -13,9 +13,9 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  created: {
-    type: Date,
-    required: Date.now,
+  updated: {
+    type: Number,
+    default: Date.now(),
   },
 });
 

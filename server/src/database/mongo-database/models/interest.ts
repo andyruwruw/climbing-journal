@@ -9,14 +9,22 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  created: {
+  date: {
     type: Number,
     default: Date.now(),
   },
-  token: {
+  route: {
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    default: 'interested',
+  },
+  notes: {
+    type: String,
+    default: '',
+  },
 });
 
-export const TokenModel = model('Token', schema);
+export const InterestModel = model('Interest', schema);

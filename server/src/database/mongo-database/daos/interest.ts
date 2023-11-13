@@ -2,25 +2,25 @@
 import { Model } from 'mongoose';
 
 // Local Imports
-import { LocationModel } from '../models';
+import { InterestModel } from '../models';
 import { DataAccessObject } from './dao';
 
 // Types
 import {
-  Location as LocationInterface,
+  Interest as InterestInterface,
   DataAccessObjectInterface,
 } from '../../../types';
 
 /**
- * Data access object for Locations.
+ * Data access object for Interests.
  */
-export class Location
-  extends DataAccessObject<LocationInterface>
-  implements DataAccessObjectInterface<LocationInterface> {
+export class Interest
+  extends DataAccessObject<InterestInterface>
+  implements DataAccessObjectInterface<InterestInterface> {
   /**
    * Retrieves mongoose Model for DataAccessObject.
    */
   _getModel(): Model<any, Record<string, any>, Record<string, any>, Record<string, any>> {
-    return LocationModel;
+    return InterestModel;
   }
 }

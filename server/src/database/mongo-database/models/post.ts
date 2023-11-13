@@ -9,14 +9,26 @@ const schema = new Schema({
     type: String,
     required: true,
   },
-  created: {
+  date: {
     type: Number,
     default: Date.now(),
   },
-  token: {
+  route: {
+    type: String,
+    default: '',
+  },
+  location: {
+    type: String,
+    default: '',
+  },
+  type: {
     type: String,
     required: true,
   },
+  privacy: {
+    type: String,
+    default: 'public',
+  },
 });
 
-export const TokenModel = model('Token', schema);
+export const PostModel = model('Post', schema);

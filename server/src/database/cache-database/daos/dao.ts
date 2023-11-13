@@ -10,40 +10,6 @@ import {
 } from '../../../types';
 
 /**
- * Applies a projection to a set of items.
- *
- * @param {any[]} items Items to apply projection to.
- * @param {QueryProjection} projection Projection to be applied.
- * @returns {Record<string, DatabaseColumnTypes>[]} Items with applied projection.
- */
-const applyProjection = (
-  items: any[],
-  projection: QueryProjection,
-): Record<string, DatabaseColumnTypes>[] => {
-  const projectedItems = [] as Record<string, DatabaseColumnTypes>[];
-  const fields = Object.keys(projection);
-
-  if (fields.length === 0) {
-    return items as unknown as Record<string, DatabaseColumnTypes>[];
-  }
-
-  for (let i = 0; i < items.length; i += 1) {
-    const item = items[i] as unknown as Record<string, DatabaseColumnTypes>;
-    const projectedItem = {} as Record<string, DatabaseColumnTypes>;
-
-    for (let j = 0; j < fields.length; j += 1) {
-      const field = fields[j];
-
-      projectedItem[fields[j]] = item[field] as DatabaseColumnTypes;
-    }
-
-    projectedItems.push(projectedItem);
-  }
-
-  return projectedItems;
-};
-
-/**
  * Abstract class for Data Access Objects.
  */
 export class DataAccessObject<T> {
@@ -54,6 +20,40 @@ export class DataAccessObject<T> {
 
   constructor() {
     this._items = [];
+  }
+
+  /**
+   * Applies a projection to a set of items.
+   *
+   * @param {any[]} items Items to apply projection to.
+   * @param {QueryProjection} projection Projection to be applied.
+   * @returns {Record<string, DatabaseColumnTypes>[]} Items with applied projection.
+   */
+  _applyProjection(
+    items: any[],
+    projection: QueryProjection,
+  ): Record<string, DatabaseColumnTypes>[] {
+    const projectedItems = [] as Record<string, DatabaseColumnTypes>[];
+    const fields = Object.keys(projection);
+
+    if (fields.length === 0) {
+      return items as unknown as Record<string, DatabaseColumnTypes>[];
+    }
+
+    for (let i = 0; i < items.length; i += 1) {
+      const item = items[i] as unknown as Record<string, DatabaseColumnTypes>;
+      const projectedItem = {} as Record<string, DatabaseColumnTypes>;
+
+      for (let j = 0; j < fields.length; j += 1) {
+        const field = fields[j];
+
+        projectedItem[fields[j]] = item[field] as DatabaseColumnTypes;
+      }
+
+      projectedItems.push(projectedItem);
+    }
+
+    return projectedItems;
   }
 
   /**
@@ -85,7 +85,7 @@ export class DataAccessObject<T> {
     projection: QueryProjection = '',
   ): Promise<T | null> {
     const items = this._findFilterItems(filter);
-    const projectedItems = applyProjection(
+    const projectedItems = this._applyProjection(
       items,
       projection,
     ) as unknown as T[];
@@ -111,7 +111,7 @@ export class DataAccessObject<T> {
       offset,
       limit,
     );
-    const projectedItems = applyProjection(
+    const projectedItems = this._applyProjection(
       items,
       projection,
     ) as unknown as T[];
@@ -145,14 +145,14 @@ export class DataAccessObject<T> {
   async delete(filter: QueryFilter = {}): Promise<number> {
     const deleteItems = this._findFilterItems(filter);
     const deleteIds = deleteItems.map((item) => {
-      if ('id' in item) {
+      if ('id' in (item as unknown as Record<string, any>)) {
         return (item as unknown as Record<string, string>).id;
       }
       return 'unknown id';
     });
 
     this._items = this._items.filter((item) => {
-      if ('id' in item) {
+      if ('id' in (item as unknown as Record<string, any>)) {
         return !(deleteIds.includes((item as unknown as Record<string, string>).id));
       }
       return true;
@@ -186,7 +186,7 @@ export class DataAccessObject<T> {
   ): Promise<boolean> {
     const items = this._findFilterItems(filter);
     const itemIds = items.map((item) => {
-      if ('id' in item) {
+      if ('id' in (item as unknown as Record<string, any>)) {
         return (item as unknown as Record<string, string>).id;
       }
       return 'unknown id';
@@ -231,7 +231,7 @@ export class DataAccessObject<T> {
   ): Promise<number> {
     const items = this._findFilterItems(filter);
     const itemIds = items.map((item) => {
-      if ('id' in item) {
+      if ('id' in (item as unknown as Record<string, any>)) {
         return (item as unknown as Record<string, string>).id;
       }
       return 'unknown id';

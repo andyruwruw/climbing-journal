@@ -15,16 +15,16 @@ const schema = new Schema({
   },
   notes: {
     type: String,
-    required: '',
+    default: '',
   },
   rating: {
     type: Number,
-    default: -1,
+    default: 0,
   },
   updated: {
-    type: Date,
-    required: Date.now,
+    type: Number,
+    default: Date.now(),
   },
 });
 
-export const LocationRatingModel = model('LocationRating', schema);
+export const ReviewModel = model('Review', schema);
