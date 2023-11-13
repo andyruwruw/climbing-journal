@@ -6,13 +6,19 @@ import {
 
 // Local Imports
 import {
+  Attempt,
   Follow,
-  LocationRating,
+  Interest,
   Location,
   Medal,
+  Post,
+  Rating,
+  Review,
+  Route,
   Session,
+  Shoes,
   Token,
-  User,
+  User
 } from './daos';
 import { Database } from '../database';
 import { DatabaseUrlMissingError } from '../../errors/database-url-missing';
@@ -24,39 +30,49 @@ import { Monitor } from '../../helpers/monitor';
  */
 export class MongoDatabase extends Database {
   /**
+   * Data access object for Attempts.
+   */
+  attempt: Attempt;
+
+  /**
    * Data access object for Follows.
    */
   follow: Follow;
 
   /**
-   * Data access object for Locations.
+   * Data access object for Follows.
    */
-  location: Location;
+  follow: Follow;
 
   /**
-   * Data access object for Location Ratings.
+   * Data access object for Follows.
    */
-  locationRating: LocationRating;
+  follow: Follow;
 
   /**
-   * Data access object for Medals.
+   * Data access object for Follows.
    */
-  medal: Medal;
+  follow: Follow;
 
   /**
-   * Data access object for Sessions.
+   * Data access object for Follows.
    */
-  session: Session;
+  follow: Follow;
 
   /**
-   * Data access object for Tokens.
+   * Data access object for Follows.
    */
-  token: Token;
+  follow: Follow;
 
   /**
-   * Data access object for Users.
+   * Data access object for Follows.
    */
-  user: User;
+  follow: Follow;
+
+  /**
+   * Data access object for Follows.
+   */
+  follow: Follow;
 
   /**
    * Instantiates MongoDatabase with correct queries.
