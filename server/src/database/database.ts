@@ -1,16 +1,20 @@
 /* eslint @typescript-eslint/no-unused-vars: "off" */
 // Local Imports
 import {
+  Attempt,
   Follow,
+  Interest,
   Location,
-  LocationRating,
   Medal,
-  Session,
-  Token,
-  DataAccessObject as DataAccessObjectInterface,
-  PrivateUser,
-  Log,
+  Post,
+  Rating,
+  Review,
   Route,
+  Session,
+  Shoes,
+  Token,
+  User,
+  DataAccessObjectInterface,
 } from '../types';
 import { DataAccessObject } from './dao';
 import { UsedAbstractDatabaseError } from '../errors/used-abstract-database-error';
@@ -20,9 +24,19 @@ import { UsedAbstractDatabaseError } from '../errors/used-abstract-database-erro
  */
 export class Database {
   /**
+   * Data access object for Attempts.
+   */
+  attempt: DataAccessObjectInterface<Attempt> = new DataAccessObject();
+
+  /**
    * Data access object for Follows.
    */
   follow: DataAccessObjectInterface<Follow> = new DataAccessObject();
+
+  /**
+   * Data access object for Interests.
+   */
+  interest: DataAccessObjectInterface<Interest> = new DataAccessObject();
 
   /**
    * Data access object for Locations.
@@ -30,19 +44,24 @@ export class Database {
   location: DataAccessObjectInterface<Location> = new DataAccessObject();
 
   /**
-   * Data access object for Location Ratings.
-   */
-  locationRating: DataAccessObjectInterface<LocationRating> = new DataAccessObject();
-
-  /**
-   * Data access object for Logs.
-   */
-  log: DataAccessObjectInterface<Log> = new DataAccessObject();
-  
-  /**
    * Data access object for Medals.
    */
   medal: DataAccessObjectInterface<Medal> = new DataAccessObject();
+
+  /**
+   * Data access object for Posts.
+   */
+  post: DataAccessObjectInterface<Post> = new DataAccessObject();
+
+  /**
+   * Data access object for Ratings.
+   */
+  rating: DataAccessObjectInterface<Rating> = new DataAccessObject();
+
+  /**
+   * Data access object for Reviews.
+   */
+  review: DataAccessObjectInterface<Review> = new DataAccessObject();
 
   /**
    * Data access object for Routes.
@@ -55,6 +74,11 @@ export class Database {
   session: DataAccessObjectInterface<Session> = new DataAccessObject();
 
   /**
+   * Data access object for Shoess.
+   */
+  shoes: DataAccessObjectInterface<Shoes> = new DataAccessObject();
+
+  /**
    * Data access object for Tokens.
    */
   token: DataAccessObjectInterface<Token> = new DataAccessObject();
@@ -62,7 +86,7 @@ export class Database {
   /**
    * Data access object for Users.
    */
-  user: DataAccessObjectInterface<PrivateUser> = new DataAccessObject();
+  user: DataAccessObjectInterface<User> = new DataAccessObject();
 
   /**
    * Connects to database.

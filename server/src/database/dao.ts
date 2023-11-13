@@ -3,31 +3,17 @@ import { UsedAbstractDAOError } from '../errors/used-abstract-dao-error';
 
 // Types
 import {
-  QueryFilter,
+  QueryConditions,
   QueryProjection,
-  UpdateQuery,
+  QueryUpdate,
+  MariaDbQuery,
+  QuerySort,
 } from '../types';
 
 /**
  * Abstract class for Data Access Objects.
  */
 export class DataAccessObject<T> {
-  /**
-   * Instantiates a new DataAccessObject.
-   */
-  constructor() {
-  }
-
-  /**
-   * Creates a new instance of the item in the Database.
-   *
-   * @param {T} options The item to create.
-   * @returns {T} The created item.
-   */
-  async _create(options: T): Promise<T> {
-    return options;
-  }
-
   /**
    * Creates a new instance of the item in the Database.
    *
@@ -39,15 +25,62 @@ export class DataAccessObject<T> {
   }
 
   /**
+   * Retrieves default sort value.
+   *
+   * @returns {Record<string, number>} Sort method.
+   */
+  _getSort() {
+    return {};
+  }
+
+  /**
+   * Pain.
+   */
+  async query(query: string | MariaDbQuery): Promise<any> {
+    return null;
+  }
+
+  /**
+   * Not needed.
+   */
+  async createTable(): Promise<void> {
+    return;
+  }
+
+  /**
+   * Not needed.
+   */
+  async dropTable(): Promise<void> {
+    return;
+  }
+
+  /**
+   * Deletes all items from the Database.
+   */
+  async deleteAll(): Promise<void> {
+    return;
+  }
+
+  /**
+   * Creates a new instance of the item in the Database.
+   *
+   * @param {T} options The item to create.
+   * @returns {T} The created item.
+   */
+  async insert(item: T): Promise<number> {
+    return;
+  }
+
+  /**
    * Finds one item in the Database.
    *
-   * @param {QueryFilter} filter The filter to apply to the query.
+   * @param {QueryConditions} filter The filter to apply to the query.
    * @param {QueryProjection} projection The projection to apply to the query.
    * @returns {Promise<T | null>} The item.
    */
   async findOne(
-    filter: QueryFilter = {},
-    projection: QueryProjection = '',
+    filter: QueryConditions = {},
+    projection: QueryProjection = {},
   ): Promise<T | null> {
     return null;
   }
@@ -55,15 +88,17 @@ export class DataAccessObject<T> {
   /**
    * Finds all of the item in the Database.
    *
-   * @param {QueryFilter} filter The filter to apply to the query.
+   * @param {QueryConditions} filter The filter to apply to the query.
    * @param {QueryProjection} projection The projection to apply to the query.
+   * @param {QuerySort | null} sort The sort to apply to the query.
    * @returns {Promise<T[]>} The items.
    */
   async find(
-    filter: QueryFilter = {},
-    projection: QueryProjection = '',
-    offset: number = 0,
-    limit: number = 20,
+    filter: QueryConditions = {},
+    projection: QueryProjection = {},
+    sort: QuerySort | null = null,
+    offset = 0,
+    limit = -1,
   ): Promise<T[]> {
     return [];
   }
@@ -81,10 +116,10 @@ export class DataAccessObject<T> {
   /**
    * Deletes all items or a subset of items from the Database.
    *
-   * @param {QueryFilter} filter The filter to apply to the query.
+   * @param {QueryConditions} filter The filter to apply to the query.
    * @returns {Promise<number>} The number of items deleted.
    */
-  async delete(filter: QueryFilter = {}): Promise<number> {
+  async delete(filter: QueryConditions = {}): Promise<number> {
     return 0;
   }
 
@@ -101,30 +136,29 @@ export class DataAccessObject<T> {
   /**
    * Updates one item in the Database matching the filter.
    *
-   * @param {QueryFilter} filter
-   * @param {UpdateQuery} update
+   * @param {QueryConditions} filter
+   * @param {QueryUpdate} update
    * @param {boolean} insertNew
    * @returns {Promise<boolean>} Whether the item was updated.
    */
-  async updateOne(
-    filter: QueryFilter = {},
-    update: UpdateQuery = {},
-    insertNew = true,
-  ): Promise<boolean> {
-    return false;
+  async update(
+    conditions: QueryConditions = {},
+    update: QueryUpdate = {},
+  ): Promise<number> {
+    return 0;
   }
 
   /**
    * Updates all items in the Database matching the filter.
    *
-   * @param {QueryFilter} filter
-   * @param {UpdateQuery} update
+   * @param {QueryConditions} filter
+   * @param {QueryUpdate} update
    * @param {boolean} insertNew
    * @returns {Promise<number>} The number of documents updated.
    */
   async updateMany(
-    filter: QueryFilter = {},
-    update: UpdateQuery = {},
+    filter: QueryConditions = {},
+    update: QueryUpdate = {},
     insertNew = true,
   ): Promise<number> {
     return 0;
@@ -136,5 +170,6 @@ export class DataAccessObject<T> {
    * @returns {Promise<void>} Promise of the action.
    */
   async clear(): Promise<void> {
+    return;
   }
 }

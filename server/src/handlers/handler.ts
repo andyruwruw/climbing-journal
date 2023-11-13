@@ -23,7 +23,7 @@ export class Handler {
   /**
    * Whether the handler is ready to execute.
    */
-  _ready: boolean = false;
+  _ready = false;
 
   /**
    * Instantiates a new handler.
@@ -46,6 +46,7 @@ export class Handler {
     req: ClimbingRequest,
     res: ClimbingResponse,
   ): Promise<void> {
+    return;
   }
 
   /**

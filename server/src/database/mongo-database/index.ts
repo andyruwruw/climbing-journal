@@ -40,39 +40,59 @@ export class MongoDatabase extends Database {
   follow: Follow;
 
   /**
-   * Data access object for Follows.
+   * Data access object for Interests.
    */
-  follow: Follow;
+  interest: Interest;
 
   /**
-   * Data access object for Follows.
+   * Data access object for Locations.
    */
-  follow: Follow;
+  location: Location;
 
   /**
-   * Data access object for Follows.
+   * Data access object for Medals.
    */
-  follow: Follow;
+  medal: Medal;
 
   /**
-   * Data access object for Follows.
+   * Data access object for Posts.
    */
-  follow: Follow;
+  post: Post;
 
   /**
-   * Data access object for Follows.
+   * Data access object for Ratings.
    */
-  follow: Follow;
+  rating: Rating;
 
   /**
-   * Data access object for Follows.
+   * Data access object for Reviews.
    */
-  follow: Follow;
+  review: Review;
 
   /**
-   * Data access object for Follows.
+   * Data access object for Routes.
    */
-  follow: Follow;
+  route: Route;
+
+  /**
+   * Data access object for Sessions.
+   */
+  session: Session;
+
+  /**
+   * Data access object for Shoess.
+   */
+  shoes: Shoes;
+
+  /**
+   * Data access object for Tokens.
+   */
+  token: Token;
+
+  /**
+   * Data access object for Users.
+   */
+  user: User;
 
   /**
    * Instantiates MongoDatabase with correct queries.
@@ -80,11 +100,17 @@ export class MongoDatabase extends Database {
   constructor() {
     super();
 
+    this.attempt = new Attempt();
     this.follow = new Follow();
+    this.interest = new Interest();
     this.location = new Location();
-    this.locationRating = new LocationRating();
     this.medal = new Medal();
+    this.post = new Post();
+    this.rating = new Rating();
+    this.review = new Review();
+    this.route = new Route();
     this.session = new Session();
+    this.shoes = new Shoes();
     this.token = new Token();
     this.user = new User();
   }

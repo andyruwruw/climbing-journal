@@ -13,7 +13,7 @@ import { SALT_WORK_FACTOR } from '../config';
 import {
   User,
   ClimbingRequest,
-  PrivateUser,
+  PublicUser,
 } from '../types';
 
 /**
@@ -53,12 +53,12 @@ export const comparePassword = async (
  *
  * @param {ClimbingRequest} req Incoming request.
  * @param {Database} database Database instance.
- * @returns {Promise<PrivateUser | null>} User if valid, null otherwise.
+ * @returns {Promise<User | null>} User if valid, null otherwise.
  */
 export const validate = async (
   req: ClimbingRequest,
   database: Database,
-): Promise<PrivateUser | null> => {
+): Promise<User | null> => {
   const cookie = getCookie(req);
 
   if (!cookie || cookie === '') {
@@ -88,23 +88,24 @@ export const validate = async (
 /**
  * Converts a private user object to a public.
  *
- * @param {PrivateUser | null} user Private user object.
- * @returns {User | null} Public user object.
+ * @param {User | null} user Private user object.
+ * @returns {PublicUser | null} Public user object.
  */
-export const convertUserToPublic = (user: PrivateUser | null): User | null => {
+export const convertUserToPublic = (user: User | null): PublicUser | null => {
   if (!user) {
     return null;
   }
 
   return {
-    name: user.name,
+    displayName: user.displayName,
     username: user.username,
+    max: user.max,
+    image: user.image,
     started: user.started,
+    home: user.home,
     height: user.height,
     span: user.span,
     weight: user.weight,
-    created: user.created,
-    image: user.image,
-    privacy: user.privacy
+    age: user.age,
   };
 };

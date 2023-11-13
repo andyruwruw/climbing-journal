@@ -15,7 +15,6 @@ import { Handler } from '../handler';
 import {
   ClimbingRequest,
   ClimbingResponse,
-  DatabaseColumnTypes,
 } from '../../types';
 
 /**
@@ -78,7 +77,7 @@ export class RegisterHandler extends Handler {
       }
 
       // Create the user.
-      const user = await Handler.database.user.create(
+      const user = await Handler.database.user.create({
         name,
         username,
         password,
@@ -88,7 +87,7 @@ export class RegisterHandler extends Handler {
         weight,
         image,
         privacy,
-      );
+      });
 
       if (!user) {
         console.log('no user created)');
@@ -104,10 +103,10 @@ export class RegisterHandler extends Handler {
         date: (new Date()).getTime(),
       });
 
-      const completed = await Handler.database.token.create(
-        user._id,
+      const completed = await Handler.database.token.create({
+        user: user._id,
         token,
-      );
+      });
 
       if (!completed) {
         console.log('not created)');

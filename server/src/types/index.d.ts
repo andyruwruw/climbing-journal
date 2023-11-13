@@ -8,6 +8,10 @@ import {
   VercelResponse,
 } from '@vercel/node';
 
+type ClimbingRequest = Request | VercelRequest;
+
+type ClimbingResponse = Response | VercelResponse;
+
 /**
  * Generic database item.
  */
@@ -307,22 +311,30 @@ interface Post extends DatabaseItem {
 
 type PrivacyStatus = 'public' | 'unlisted' | 'private';
 
-interface User extends DatabaseItem {
-  username: string;
-
-  password: string;
-
+interface User extends PublicUser {
   displayName: string;
 
-  max: UserSends;
-
   email: string;
-
-  image: string;
 
   admin: boolean;
 
   created: number;
+
+  privacy: PrivacyStatus;
+
+  attemptPrivacy: PrivacyStatus;
+
+  sessionPrivacy: PrivacyStatus;
+}
+
+interface PublicUser extends DatabaseItem {
+  displayName: string;
+
+  username: string;
+
+  max: UserSends;
+
+  image: string;
 
   started: number;
 
@@ -334,13 +346,7 @@ interface User extends DatabaseItem {
 
   weight: number;
 
-  age: string;
-
-  privacy: PrivacyStatus;
-
-  attemptPrivacy: PrivacyStatus;
-
-  sessionPrivacy: PrivacyStatus;
+  age: number;
 }
 
 /**

@@ -79,10 +79,10 @@ export class LoginHandler extends Handler {
         date: (new Date()).getTime(),
       });
 
-      const completed = await Handler.database.token.create(
-        user._id,
+      const completed = await Handler.database.token.create({
+        user: user._id,
         token,
-      );
+      });
 
       if (!completed) {
         res.status(500).send({
