@@ -25,9 +25,9 @@ const schema = new Schema({
     type: Number,
     default: 0,
   },
-  status: {
+  notes: {
     type: String,
-    default: 'sent',
+    default: '',
   },
   updated: {
     type: Number,

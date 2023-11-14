@@ -1,20 +1,33 @@
 // Local Imports
 import {
-  attatchCookie,
-  generateToken,
-} from '../../helpers/cookie';
+  generateEmptyMaxSends,
+  limitString,
+  sanitizeDate,
+  sanitizeMaxSends,
+  sanitizeNumber,
+  sanitizePrivacy,
+} from '../../config';
 import {
   MESSAGE_CREATE_HANDLER_DUPLICATE_ENTRY_ERROR,
   MESSAGE_CREATE_HANDLER_PARAMETER_MISSING,
   MESSAGE_INTERNAL_SERVER_ERROR,
 } from '../../config/messages';
-import { convertUserToPublic } from '../../helpers/authentication';
+import {
+  convertUserToPublic,
+  hashPassword,
+} from '../../helpers/authentication';
+import {
+  attatchCookie,
+  generateToken,
+} from '../../helpers/cookie';
 import { Handler } from '../handler';
 
 // Types
 import {
   ClimbingRequest,
   ClimbingResponse,
+  User,
+  UserSends,
 } from '../../types';
 
 /**
@@ -32,26 +45,30 @@ export class RegisterHandler extends Handler {
     res: ClimbingResponse,
   ): Promise<void> {
     try {
-      console.log(req.body);
+      // Retrieve parameters.
       const {
-        name,
         username,
         password,
-        started = -1,
-        height = -1,
-        span = 100,
-        weight = -1,
+        displayName,
+        max = generateEmptyMaxSends(),
+        email = '',
         image = '',
+        started = 0,
+        home = '',
+        height = 0,
+        span = -100,
+        weight = 0,
+        age = 0,
         privacy = 'public',
+        attemptPrivacy = 'public',
+        sessionPrivacy = 'public',
+        interestPrivacy = 'public',
+        reviewPrivacy = 'public',
+        ratingPrivacy = 'public',
+        shoesPrivacy = 'public',
       } = req.query;
 
-      // Are the required fields provided?
-      if (!name) {
-        res.status(400).send({
-          error: MESSAGE_CREATE_HANDLER_PARAMETER_MISSING('user', 'name'),
-        });
-        return;
-      }
+      // Ensure valididty of parameters.
       if (!username) {
         res.status(400).send({
           error: MESSAGE_CREATE_HANDLER_PARAMETER_MISSING('user', 'username'),
@@ -64,52 +81,73 @@ export class RegisterHandler extends Handler {
         });
         return;
       }
+      if (!displayName) {
+        res.status(400).send({
+          error: MESSAGE_CREATE_HANDLER_PARAMETER_MISSING('user', 'display name'),
+        });
+        return;
+      }
 
       // Check for duplicate username.
-      const existing = await Handler.database.user.findOne({ username: username as unknown as string });
-
-      if (existing) {
-        console.log('exists');
+      if (await Handler.database.user.findOne({ username: username as unknown as string })) {
         res.status(400).send({
           error: MESSAGE_CREATE_HANDLER_DUPLICATE_ENTRY_ERROR('user', 'username', username),
         });
         return;
       }
 
-      // Create the user.
-      const user = await Handler.database.user.create({
-        name,
-        username,
-        password,
-        started,
-        height,
-        span,
-        weight,
-        image,
-        privacy,
-      });
+      // Prepare insert query.
+      const query = {
+        username: limitString(username as string, 100),
+        password: await hashPassword(password as string),
+        displayName: limitString(displayName as string, 100),
+        max: sanitizeMaxSends(max as UserSends),
+        admin: false,
+        href: {},
+        email: limitString(email as string, 500),
+        image: limitString(image),
+        created: Date.now(),
+        started: sanitizeDate(started),
+        home: limitString(home as string, 500),
+        height: sanitizeNumber(height, false, 500, -1, 0),
+        span: sanitizeNumber(span, false, 500, sanitizeNumber(height, false, 500, -1, -1) * -1),
+        weight: sanitizeNumber(weight, false, NaN, 0, 0),
+        age: sanitizeNumber(age, false, NaN, 0, 0),
+        privacy: sanitizePrivacy(privacy as string),
+        attemptPrivacy: sanitizePrivacy(attemptPrivacy as string),
+        sessionPrivacy: sanitizePrivacy(sessionPrivacy as string),
+        interestPrivacy: sanitizePrivacy(interestPrivacy as string),
+        reviewPrivacy: sanitizePrivacy(reviewPrivacy as string),
+        ratingPrivacy: sanitizePrivacy(ratingPrivacy as string),
+        shoesPrivacy: sanitizePrivacy(shoesPrivacy as string),
+      } as User;
 
-      if (!user) {
-        console.log('no user created)');
+      // Create the user.
+      if (!await Handler.database.user.create(query)) {
         res.status(500).send({
           error: MESSAGE_INTERNAL_SERVER_ERROR,
         });
         return;
       }
 
+      // Find the created user.
+      const user = await Handler.database.user.findOne({
+        username: username as string,
+      });
+
       // Generate a login token.
       const token = generateToken({
-        id: user._id,
-        date: (new Date()).getTime(),
+        user: user.username,
+        date: Date.now(),
       });
-
-      const completed = await Handler.database.token.create({
-        user: user._id,
+      const createdTokens = await Handler.database.token.create({
+        user: user.username,
         token,
+        created: Date.now(),
       });
 
-      if (!completed) {
-        console.log('not created)');
+      // Session creation failure.
+      if (!createdTokens) {
         res.status(500).send({
           error: MESSAGE_INTERNAL_SERVER_ERROR,
         });
@@ -125,8 +163,6 @@ export class RegisterHandler extends Handler {
         user: convertUserToPublic(user),
       });
     } catch (error) {
-      console.log(error);
-
       res.status(500).send({
         error: MESSAGE_INTERNAL_SERVER_ERROR,
       });

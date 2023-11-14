@@ -23,6 +23,8 @@ export const MESSAGE_USED_ABSTRACT_DAO_ERROR = 'Attempted to use Abstract Data A
  */
 export const MESSAGE_DATABASE_URL_MISSING_ERROR = 'Database URL not set in .env!';
 
+export const MESSAGE_INVALID_RATING_VALUE = 'Rating must be between 0 and 5 with 0.5 increments.';
+
 /**
  * Error message thrown when a parameter is missing in create request.
  *
@@ -43,8 +45,8 @@ export const MESSAGE_CREATE_HANDLER_PARAMETER_MISSING = (
  * @returns {string} Error message.
  */
 export const MESSAGE_HANDLER_PARAMETER_MISSING = (
-  item: string,
   parameter: string,
+  item: string,
 ) => `${parameter} for ${item} not provided`;
 
 /**

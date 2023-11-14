@@ -3,13 +3,13 @@
 import { Database } from '../database/database';
 import { Environment } from '../helpers/environment';
 import { getDatabase } from '../database';
+import { Monitor } from '../helpers/monitor';
 
 // Types
 import {
   ClimbingRequest,
   ClimbingResponse,
 } from '../types';
-import { Monitor } from '../helpers/monitor';
 
 /**
  * Abstract handler class.

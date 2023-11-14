@@ -15,6 +15,7 @@ import {
   Token,
   User,
   DataAccessObjectInterface,
+  Area,
 } from '../types';
 import { DataAccessObject } from './dao';
 import { UsedAbstractDatabaseError } from '../errors/used-abstract-database-error';
@@ -23,6 +24,11 @@ import { UsedAbstractDatabaseError } from '../errors/used-abstract-database-erro
  * Abstract Database interface, only implement inherited classes.
  */
 export class Database {
+  /**
+   * Data access object for Areas.
+   */
+  area: DataAccessObjectInterface<Area> = new DataAccessObject();
+
   /**
    * Data access object for Attempts.
    */

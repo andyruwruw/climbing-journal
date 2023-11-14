@@ -68,21 +68,23 @@ export const validate = async (
   const token = decodeToken(cookie);
 
   const {
-    id,
+    user,
   } = token;
 
-  if (!id || id === '') {
+  if (!user || user === '') {
     return null;
   }
 
   if ((await database.token.find({
-    user: id,
+    user,
     token: cookie,
   })).length == 0) {
     return null;
   }
 
-  return await database.user.findById(id);
+  return await database.user.findOne({
+    username: user,
+  });
 };
 
 /**
@@ -107,5 +109,6 @@ export const convertUserToPublic = (user: User | null): PublicUser | null => {
     span: user.span,
     weight: user.weight,
     age: user.age,
+    href: user.href,
   };
 };

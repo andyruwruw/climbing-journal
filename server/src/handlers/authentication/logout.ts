@@ -1,4 +1,9 @@
 // Local Imports
+import {
+  attatchCookie,
+  getCookie,
+} from '../../helpers/cookie';
+import { MESSAGE_INTERNAL_SERVER_ERROR } from '../../config/messages';
 import { Handler } from '../handler';
 import { validate } from '../../helpers/authentication';
 
@@ -7,8 +12,6 @@ import {
   ClimbingRequest,
   ClimbingResponse,
 } from '../../types';
-import { attatchCookie, getCookie } from '../../helpers/cookie';
-import { MESSAGE_INTERNAL_SERVER_ERROR, MESSAGE_LOGOUT_FAILURE } from '../../config/messages';
 
 /**
  * Handler for logging a user out.
@@ -25,28 +28,23 @@ export class LogoutHandler extends Handler {
     res: ClimbingResponse,
   ): Promise<void> {
     try {
-      const cookie = getCookie(req);
+      // Verify current user session.
       const user = await validate(req, Handler.database);
+      const cookie = getCookie(req);
 
+      // No session detected.
       if (!cookie || !user) {
-        res.status(400).send({
-          error: MESSAGE_LOGOUT_FAILURE,
-        });
+        res.status(200).send({});
         return;
       }
 
-      const affectedRows = await Handler.database.token.delete({
-        user: user._id as string,
+      // Delete the session token.
+      await Handler.database.token.delete({
+        user: user.username as string,
         token: cookie,
       });
 
-      if (affectedRows === 0) {
-        res.status(400).send({
-          error: MESSAGE_LOGOUT_FAILURE,
-        });
-        return;
-      }
-
+      // Send back dead token.
       attatchCookie(
         res,
         '',
@@ -54,8 +52,6 @@ export class LogoutHandler extends Handler {
 
       res.status(200).send({});
     } catch (error) {
-      console.log(error);
-
       res.status(500).send({
         error: MESSAGE_INTERNAL_SERVER_ERROR,
       });

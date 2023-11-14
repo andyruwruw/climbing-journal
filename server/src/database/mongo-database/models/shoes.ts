@@ -29,9 +29,13 @@ const schema = new Schema({
     type: Number,
     default: -1,
   },
-  sizeEUR: {
+  sizeEU: {
     type: Number,
     default: -1,
+  },
+  acquired: {
+    type: String,
+    default: 'New',
   },
   status: {
     type: String,
@@ -56,6 +60,10 @@ const schema = new Schema({
   updated: {
     type: Number,
     default: Date.now(),
+  },
+  shoesPrivacy: {
+    type: String,
+    default: 'private',
   },
 });
 

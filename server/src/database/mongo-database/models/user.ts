@@ -73,6 +73,26 @@ const schema = new Schema({
     type: String,
     default: 'public',
   },
+  interestPrivacy: {
+    type: String,
+    default: 'public',
+  },
+  reviewPrivacy: {
+    type: String,
+    default: 'public',
+  },
+  shoesPrivacy: {
+    type: String,
+    default: 'private',
+  },
+  ratingPrivacy: {
+    type: String,
+    default: 'public',
+  },
+  href: {
+    type: Object,
+    default: {},
+  },
 });
 
 export const UserModel = model('User', schema);

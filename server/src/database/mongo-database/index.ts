@@ -6,6 +6,7 @@ import {
 
 // Local Imports
 import {
+  Area,
   Attempt,
   Follow,
   Interest,
@@ -29,6 +30,11 @@ import { Monitor } from '../../helpers/monitor';
  * Database connection to MongoDB.
  */
 export class MongoDatabase extends Database {
+  /**
+   * Data access object for Attempts.
+   */
+  area: Area;
+
   /**
    * Data access object for Attempts.
    */
@@ -100,6 +106,7 @@ export class MongoDatabase extends Database {
   constructor() {
     super();
 
+    this.area = new Area();
     this.attempt = new Attempt();
     this.follow = new Follow();
     this.interest = new Interest();

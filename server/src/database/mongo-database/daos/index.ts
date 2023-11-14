@@ -1,4 +1,5 @@
 // Local Exports
+export { Area } from './area';
 export { Attempt } from './attempt';
 export { Follow } from './follow';
 export { Interest } from './interest';

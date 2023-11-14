@@ -20,8 +20,8 @@ export class DataAccessObject<T> {
    * @param {T} options The item to create.
    * @returns {T} The created item.
    */
-  async create(options: T): Promise<T> {
-    return options;
+  async create(options: T): Promise<number> {
+    return 0;
   }
 
   /**

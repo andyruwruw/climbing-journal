@@ -37,6 +37,10 @@ const schema = new Schema({
     type: Number,
     default: Date.now(),
   },
+  submitted: {
+    type: String,
+    required: true,
+  },
 });
 
 export const LocationModel = model('Location', schema);

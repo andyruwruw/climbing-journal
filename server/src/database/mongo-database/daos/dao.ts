@@ -73,7 +73,7 @@ export class DataAccessObject<T> implements DataAccessObjectInterface<T> {
    * @param {T} options The item to create.
    * @returns {T} The created item.
    */
-  async insert(item: T): Promise<number> {
+  async create(item: T): Promise<number> {
     const row = new this._model(item);
 
     await row.save();

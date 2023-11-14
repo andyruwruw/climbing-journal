@@ -1,4 +1,5 @@
 // Packages
+import { generateEmptyMaxSends } from '@/config';
 import {
   model,
   Schema,
@@ -29,7 +30,7 @@ const schema = new Schema({
     type: Number,
     default: 0,
   },
-  subAreas: {
+  areas: {
     type: [String],
     default: [],
   },
@@ -77,69 +78,9 @@ const schema = new Schema({
     type: Number,
     default: 5,
   },
-  maxBoulder: {
-    type: Number,
-    default: -1,
-  },
-  maxBoulderSubGrade: {
-    type: Number,
-    default: 0,
-  },
-  maxSport: {
-    type: Number,
-    default: -1,
-  },
-  maxSportSubGrade: {
-    type: Number,
-    default: 0,
-  },
-  maxTrad: {
-    type: Number,
-    default: -1,
-  },
-  maxTradSubGrade: {
-    type: Number,
-    default: 0,
-  },
-  maxTopRope: {
-    type: Number,
-    default: -1,
-  },
-  maxTopRopeSubGrade: {
-    type: Number,
-    default: 0,
-  },
-  maxAid: {
-    type: Number,
-    default: -1,
-  },
-  maxAidSubGrade: {
-    type: Number,
-    default: 0,
-  },
-  maxIce: {
-    type: Number,
-    default: -1,
-  },
-  maxIceSubGrade: {
-    type: Number,
-    default: 0,
-  },
-  maxMixed: {
-    type: Number,
-    default: -1,
-  },
-  maxMixedSubGrade: {
-    type: Number,
-    default: 0,
-  },
-  maxAlpine: {
-    type: Number,
-    default: -1,
-  },
-  maxAlpineSubGrade: {
-    type: Number,
-    default: 0,
+  max: {
+    type: Object,
+    default: generateEmptyMaxSends(),
   },
   notes: {
     type: String,

@@ -1,14 +1,17 @@
 // Local Imports
 import {
-  attatchCookie,
-  generateToken,
-} from '../../helpers/cookie';
-import {
   MESSAGE_HANDLER_PARAMETER_MISSING,
   MESSAGE_INTERNAL_SERVER_ERROR,
   MESSAGE_LOGIN_FAILURE,
 } from '../../config/messages';
-import { comparePassword, convertUserToPublic } from '../../helpers/authentication';
+import {
+  attatchCookie,
+  generateToken,
+} from '../../helpers/cookie';
+import {
+  comparePassword,
+  convertUserToPublic,
+} from '../../helpers/authentication';
 import { Handler } from '../handler';
 
 // Types
@@ -33,8 +36,8 @@ export class LoginHandler extends Handler {
   ): Promise<void> {
     try {
       const {
-        username = null,
-        password = null,
+        username,
+        password,
       } = req.query;
 
       // Are the required fields provided?
@@ -51,10 +54,10 @@ export class LoginHandler extends Handler {
         return;
       }
 
+      // Does the user by this username exist?
       const user = await Handler.database.user.findOne({
         username: username as string,
       });
-
       if (!user) {
         res.status(400).send({
           error: MESSAGE_LOGIN_FAILURE,
@@ -62,11 +65,13 @@ export class LoginHandler extends Handler {
         return;
       }
 
+      // Compare password hashes
       const passwordsMatch = await comparePassword(
         user.password as string,
         password as string,
       );
 
+      // Login failed, password mismatch.
       if (!passwordsMatch) {
         res.status(400).send({
           error: MESSAGE_LOGIN_FAILURE,
@@ -74,14 +79,15 @@ export class LoginHandler extends Handler {
         return;
       }
 
+      // Generate a new session token.
       const token = generateToken({
-        id: user._id,
-        date: (new Date()).getTime(),
+        user: user.username,
+        date: Date.now(),
       });
-
       const completed = await Handler.database.token.create({
-        user: user._id,
+        user: user.username,
         token,
+        created: Date.now(),
       });
 
       if (!completed) {
@@ -91,6 +97,7 @@ export class LoginHandler extends Handler {
         return;
       }
 
+      // Send back user and session.
       attatchCookie(
         res,
         token,
@@ -99,9 +106,10 @@ export class LoginHandler extends Handler {
       res.status(201).send({
         user: convertUserToPublic(user),
       });
-      return;
     } catch (error) {
-      console.log(error);
+      res.status(500).send({
+        error: MESSAGE_INTERNAL_SERVER_ERROR,
+      });
     }
   }
 }

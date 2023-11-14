@@ -5,6 +5,15 @@ import {
 } from 'mongoose';
 
 const schema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  altNames: {
+    type: Array,
+    of: String,
+    default: [],
+  },
   type: {
     type: String,
     default: 'boulder',
@@ -22,10 +31,6 @@ const schema = new Schema({
     default: 'CA',
   },
   area: {
-    type: String,
-    default: '',
-  },
-  subArea: {
     type: String,
     default: '',
   },
@@ -52,6 +57,10 @@ const schema = new Schema({
   updated: {
     type: Number,
     default: Date.now(),
+  },
+  submitted: {
+    type: String,
+    required: true,
   },
   media: {
     type: [Object],

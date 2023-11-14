@@ -12,6 +12,8 @@ type ClimbingRequest = Request | VercelRequest;
 
 type ClimbingResponse = Response | VercelResponse;
 
+type Dictionary<T> = Record<string, T>;
+
 /**
  * Generic database item.
  */
@@ -41,21 +43,25 @@ interface ExternalHref {
   eightA?: string;
 
   sendage?: string;
+
+  coordinates?: string;
+
+  appleMaps?: string;
 }
 
-type MediaType = 'image' | 'video' | 'link';
+type MediaType = 'image' | 'youtube' | 'instagram' | 'website' | 'drive';
 
 interface Media {
   type: MediaType;
 
   href: string;
 
-  caption: string;
+  caption?: string;
 
-  date: number;
+  date?: number;
 }
 
-type AttemptState = 'attempt' | 'top-roped' | 'lead' | 'trad' | 'hung' | 'flash' | 'send' | 'day-flash' | 'onsight' | 'ice' | 'project' | 'touch' | 'unknown';
+type AttemptStatus = 'attempt' | 'top-roped' | 'lead' | 'trad' | 'hung' | 'flash' | 'send' | 'day-flash' | 'onsight' | 'ice' | 'project' | 'touch' | 'unknown';
 
 interface Attempt extends DatabaseItem {
   user: string;
@@ -64,7 +70,7 @@ interface Attempt extends DatabaseItem {
 
   route: string;
 
-  status: AttemptState;
+  status: AttemptStatus;
 
   notes: string;
 
@@ -81,7 +87,7 @@ interface Follow {
   updated: number;
 }
 
-type InterestStatue = 'project' | 'visit' | 'clean';
+type InterestStatus = 'project' | 'visit' | 'clean';
 
 interface Interest extends DatabaseItem {
   user: string;
@@ -90,7 +96,7 @@ interface Interest extends DatabaseItem {
 
   route: string;
 
-  status: InterestStatue;
+  status: InterestStatus;
 
   notes: string;
 }
@@ -111,6 +117,8 @@ interface Location extends DatabaseItem {
   media: Media[];
 
   updated: number;
+
+  submitted: string;
 }
 
 interface Medal extends DatabaseItem {
@@ -134,7 +142,7 @@ interface Rating extends DatabaseItem {
 
   rating: number;
 
-  status: AttemptState;
+  notes: string;
 
   updated: number;
 }
@@ -152,6 +160,10 @@ interface Review extends DatabaseItem {
 }
 
 interface Route extends DatabaseItem {
+  name: string;
+
+  altNames: string[];
+
   type: string;
 
   multiPitch: boolean;
@@ -161,8 +173,6 @@ interface Route extends DatabaseItem {
   state: string;
 
   area: string;
-
-  subArea: string;
 
   href: ExternalHref;
 
@@ -175,6 +185,8 @@ interface Route extends DatabaseItem {
   rating: number;
 
   updated: number;
+
+  submitted: string;
 
   media: Media[];
 }
@@ -192,7 +204,7 @@ interface Session extends DatabaseItem {
 
   duration: number;
 
-  subAreas: string[];
+  areas: string[];
 
   state: string;
   
@@ -216,37 +228,7 @@ interface Session extends DatabaseItem {
 
   felt: number;
 
-  maxBoulder: number;
-
-  maxBoulderSubGrade: number;
-
-  maxSport: number;
-
-  maxSportSubGrade: number;
-
-  maxTrad: number;
-
-  maxTradSubGrade: number;
-
-  maxTopRope: number;
-
-  maxTopRopeSubGrade: number;
-
-  maxAid: number;
-
-  maxAidSubGrade: number;
-
-  maxIce: number;
-
-  maxIceSubGrade: number;
-
-  maxMixed: number;
-
-  maxMixedSubGrade: number;
-
-  maxAlpine: number;
-
-  maxAlpineSubGrade: number;
+  max: UserSends;
 
   notes: string;
 
@@ -272,7 +254,9 @@ interface Shoes extends DatabaseItem {
 
   sizeUS: number;
 
-  sizeEUR: number;
+  sizeEU: number;
+
+  acquired: ShoesStatus;
 
   status: ShoesStatus;
 
@@ -314,6 +298,8 @@ type PrivacyStatus = 'public' | 'unlisted' | 'private';
 interface User extends PublicUser {
   displayName: string;
 
+  password: string;
+
   email: string;
 
   admin: boolean;
@@ -325,6 +311,38 @@ interface User extends PublicUser {
   attemptPrivacy: PrivacyStatus;
 
   sessionPrivacy: PrivacyStatus;
+
+  interestPrivacy: PrivacyStatus;
+
+  reviewPrivacy: PrivacyStatus;
+
+  ratingPrivacy: PrivacyStatus;
+
+  shoesPrivacy: PrivacyStatus;
+}
+
+type AreaType = 'area' | 'boulder' | 'wall';
+
+interface Area extends DatabaseItem {
+  name: string;
+
+  altNames: string[];
+
+  location: string;
+
+  parent: string;
+
+  type: AreaType;
+
+  color: string;
+
+  href: ExternalHref;
+
+  media: Media[];
+
+  updated: number;
+
+  submitted: string;
 }
 
 interface PublicUser extends DatabaseItem {
@@ -347,6 +365,8 @@ interface PublicUser extends DatabaseItem {
   weight: number;
 
   age: number;
+
+  href: ExternalHref;
 }
 
 /**
@@ -439,6 +459,7 @@ interface UserSends {
 }
 
 type RouteType = 'boulder' | 'multi-pitch' | 'top-rope' | 'lead' | 'trad' | 'ice' | 'mixed' | 'aid' | 'other';
+
 export interface DatabaseRow {
   /**
    * Database Unique Identifier.
@@ -449,7 +470,7 @@ export interface DatabaseRow {
 /**
  * Database column types.
  */
-export type DatabaseColumnTypes = string | number | boolean | any[] | null | undefined;
+export type DatabaseColumnTypes = string | number | boolean | any[] | null | undefined | Dictionary<DatabaseColumnTypes>;
 
 export interface AdvancedQuery {
   $eq?: DatabaseColumnTypes;
@@ -662,6 +683,8 @@ export type AnnotationType = 'interval' | 'single' | 'section' | 'random' | 'con
  * Basic data access object.
  */
 export interface DataAccessObjectInterface<T> {
+  create: (options: T) => Promise<number>;
+
   /**
    * Clears all items from the table.
    *
@@ -734,14 +757,6 @@ export interface DataAccessObjectInterface<T> {
     conditions: QueryConditions,
     projection?: QueryProjection,
   ) => Promise<T | null>;
-
-  /**
-   * Creates a new instance of the item in the Database.
-   *
-   * @param {T} options The item to create.
-   * @returns {T} The created item.
-   */
-  insert: (item: T) => Promise<number>;
 
   /**
    * Pain.

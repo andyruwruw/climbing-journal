@@ -1,4 +1,5 @@
 // Local Exports
+export { AreaModel } from './area';
 export { AttemptModel } from './attempt';
 export { FollowModel } from './follow';
 export { InterestModel } from './interest';
