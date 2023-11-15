@@ -3,9 +3,9 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 
 // Local Imports
-import LandingView from '../views/landing/LandingView.vue';
-import LoginView from '../views/login/LoginView.vue';
-import HomeView from '../views/home/HomeView.vue';
+import LandingView from '../views/landing/landing-view.vue';
+import LoginView from '../views/login/login-view.vue';
+import HomeView from '../views/home/home-view.vue';
 
 Vue.use(VueRouter);
 
@@ -28,22 +28,57 @@ const routes: Array<RouteConfig> = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/about/AboutView.vue'),
+    component: () => import('../views/about/about-view.vue'),
   },
   {
-    path: '/profile/:id',
-    name: 'Profile',
-    component: () => import('../views/profile/ProfileView.vue'),
-  },
-  {
-    path: '/session/:id',
-    name: 'Session',
-    component: () => import('../views/session/SessionView.vue'),
+    path: '/attempt/:user/:id',
+    name: 'Attempt',
+    component: () => import('../views/attempt/attempt-view.vue'),
   },
   {
     path: '/404',
     name: '404',
-    component: () => import('../views/error/404View.vue'),
+    component: () => import('../views/error/404-view.vue'),
+  },
+  {
+    path: '/500',
+    name: '500',
+    component: () => import('../views/error/500-view.vue'),
+  },
+  {
+    path: '/interest/:user/:id',
+    name: 'Interest',
+    component: () => import('../views/interest/interest-view.vue'),
+  },
+  {
+    path: '/location/:id',
+    name: 'Location',
+    component: () => import('../views/location/location-view.vue'),
+  },
+  {
+    path: '/profile/:id',
+    name: 'Profile',
+    component: () => import('../views/profile/profile-view.vue'),
+  },
+  {
+    path: '/route/:location/:id',
+    name: 'Route',
+    component: () => import('../views/route/route-view.vue'),
+  },
+  {
+    path: '/session/:id',
+    name: 'Session',
+    component: () => import('../views/session/session-view.vue'),
+  },
+  {
+    path: '/shoes/:brand/:model',
+    name: 'Shoes',
+    component: () => import('../views/shoes/shoes-view.vue'),
+  },
+  {
+    path: '/shoes/:brand/:model/:id',
+    name: 'Shoes Log',
+    component: () => import('../views/shoes/shoes-log-view.vue'),
   },
 ];
 

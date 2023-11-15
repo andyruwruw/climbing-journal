@@ -49,12 +49,19 @@ export class FollowUserHandler extends Handler {
       // Retrieve parameters.
       const {
         username,
-      } = req.query;
+      } = req.body;
 
       // Ensure valididty of parameters.
       if (!username) {
         res.status(400).send({
           message: MESSAGE_HANDLER_PARAMETER_MISSING('username', 'user'),
+        });
+        return;
+      }
+
+      if (username === user.username) {
+        res.status(400).send({
+          message: 'You cannot follow yourself.',
         });
         return;
       }

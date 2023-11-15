@@ -4,6 +4,7 @@ import {
   MESSAGE_INTERNAL_SERVER_ERROR, MESSAGE_ITEM_MISSING, MESSAGE_UNAUTHORIZED,
 } from '../../config/messages';
 import { Handler } from '../handler';
+import { limitString } from '../../config';
 import { validate } from '../../helpers/authentication';
 
 // Types
@@ -11,7 +12,6 @@ import {
   ClimbingRequest,
   ClimbingResponse,
 } from '../../types';
-import { limitString } from '@/config';
 
 /**
  * Unfollows a user.
