@@ -5,5 +5,4 @@ import request from './request';
 import {} from '../types';
 
 export default {
-
 };

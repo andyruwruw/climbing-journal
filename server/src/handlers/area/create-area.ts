@@ -97,7 +97,7 @@ export class CreateAreaHandler extends Handler {
         altNames: limitStringArray(altNames, 1000),
         parent: limitString(parent, 1000),
         type: sanitizeAreaType(type),
-        color: limitString(color, 8),
+        color: color ? limitString(color, 8) : randomColor(),
         href: sanitizeAreaHref(href),
         media: sanitizeMedia(media as any[]),
         updated: Date.now(),

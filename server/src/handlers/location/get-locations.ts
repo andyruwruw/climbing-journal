@@ -5,7 +5,7 @@ import {
 } from '../../config/messages';
 import { Handler } from '../handler';
 import { validate } from '../../helpers/authentication';
-import { sanitizeBoolean } from '../../config';
+import { sanitizeBoolean, sanitizeCursorLimit, sanitizeCursorOffset } from '../../config';
 
 // Types
 import {
@@ -40,8 +40,10 @@ export class GetLocationsHandler extends Handler {
       const {
         ids = [],
         state = '##',
-        outdoors = 'true',
+        outdoors = 'false',
         userSpecific = 'false',
+        limit = '50',
+        offset = '0',
       } = req.query;
 
       let determinedIds = ids;
@@ -85,7 +87,15 @@ export class GetLocationsHandler extends Handler {
       }
 
       // Find locations.
-      const locations = await Handler.database.location.find(query);
+      const locations = await Handler.database.location.find(
+        query,
+        {},
+        {
+          name: 1,
+        },
+        sanitizeCursorOffset(offset),
+        sanitizeCursorLimit(limit),
+      );
 
       res.status(200).send({
         locations,

@@ -12,7 +12,6 @@ import { overrideAdminQuery } from '../../config';
 import {
   ClimbingRequest,
   ClimbingResponse,
-  QueryConditions,
 } from '../../types';
 
 /**

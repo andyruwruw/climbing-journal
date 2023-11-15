@@ -68,10 +68,10 @@ export class GetRoutesHandler extends Handler {
         offset = 0,
       } = req.query;
 
-      if (('submitted' in req.body
-        || 'interested' in req.body
-        || 'attempted' in req.body
-        || 'sent' in req.body)
+      if (('submitted' in req.query
+        || 'interested' in req.query
+        || 'attempted' in req.query
+        || 'sent' in req.query)
         && !user) {
         res.status(401).send({
           message: MESSAGE_UNAUTHORIZED,
@@ -142,7 +142,7 @@ export class GetRoutesHandler extends Handler {
       if ('location' in req.query) {
         query.location = limitString(location, 100);
       }
-      if ('submitted' in req.body && sanitizeBoolean(submitted)) {
+      if ('submitted' in req.query) {
         query.submitted = user.username;
       }
       if ('area' in req.query) {

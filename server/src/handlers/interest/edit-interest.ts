@@ -10,6 +10,7 @@ import {
   IS_NUMBER,
   limitString,
   overrideAdminQuery,
+  sanitizeDate,
   sanitizeInterestStatus,
 } from '../../config';
 import { Handler } from '../handler';
@@ -55,10 +56,10 @@ export class EditInterestHandler extends Handler {
       // Retrieve parameters.
       const {
         id,
-        date,
-        route,
-        status,
-        notes,
+        date = 0,
+        route = '',
+        status = 'interested',
+        notes = '',
       } = req.body;
 
       // Ensure valididty of parameters.
@@ -94,16 +95,16 @@ export class EditInterestHandler extends Handler {
 
       // Prepare and sanitize update query.
       const update = {} as Dictionary<DatabaseColumnTypes>;
-      if (date || parseInt(`${date}`, 10) === 0) {
-        update.date = parseInt(`${date}`, 10);
+      if ('date' in req.body) {
+        update.date = sanitizeDate(date);
       }
-      if (route) {
+      if ('route' in req.body) {
         update.route = limitString(route, 1000);
       }
-      if (status) {
+      if ('status' in req.body) {
         update.status = sanitizeInterestStatus(status);
       }
-      if (notes) {
+      if ('notes' in req.body) {
         update.notes = limitString(notes);
       }
 

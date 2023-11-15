@@ -112,7 +112,7 @@ export class EditAreaHandler extends Handler {
         update.type = sanitizeAreaType(type);
       }
       if ('color' in req.body) {
-        update.color = limitString(color, 8);
+        update.color = color ? limitString(color, 8) : randomColor();
       }
       if ('href' in req.body) {
         update.href = sanitizeAreaHref(href);

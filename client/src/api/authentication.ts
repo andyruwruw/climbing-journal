@@ -1,24 +1,25 @@
 // Local Imports
-import request from './request';
+import request, { generateBody } from './request';
 
 // Types
 import {
-  User,
   ErrorResponse,
-  UserPrivacy,
+  PublicUser,
+  PrivacyStatus,
+  UserSends,
 } from '../types';
 
 /**
  * Checks if user has a current session.
  *
- * @returns {Promise<User | ErrorResponse>} Promise of action.
+ * @returns {Promise<PublicUser | ErrorResponse>} Promise of action.
  */
-export const checkUser = async (): Promise<User | ErrorResponse> => {
+export const checkUser = async (): Promise<PublicUser | null | ErrorResponse> => {
   try {
     const response = await request.get('/authentication/check-user');
 
     if (response.status === 200) {
-      return response.data.user;
+      return response.data.user as PublicUser | null;
     }
     return {
       status: response.status,
@@ -37,14 +38,13 @@ export const checkUser = async (): Promise<User | ErrorResponse> => {
  *
  * @param {string} username User's username.
  * @param {string} password User's password.
- * @returns {Promise<User | ErrorResponse>} User object or error.
+ * @returns {Promise<PublicUser | ErrorResponse>} User object or error.
  */
 export const login = async (
   username: string,
   password: string,
-): Promise<User | ErrorResponse> => {
+): Promise<PublicUser | ErrorResponse> => {
   try {
-    console.log(username, password);
     const response = await request({
       method: 'PUT',
       url: '/authentication/login',
@@ -55,7 +55,7 @@ export const login = async (
     });
 
     if (response.status === 201) {
-      return response.data.user;
+      return response.data.user as PublicUser;
     }
     return {
       status: response.status,
@@ -86,47 +86,76 @@ export const logout = async (): Promise<void | ErrorResponse> => {
 /**
  * Creates a new user.
  *
- * @param {string} name User's name.
  * @param {string} username User's username.
  * @param {string} password User's password.
- * @param {number} [started = -1,] When the user started climbing.
- * @param {number} [height = -1,] The user's height.
- * @param {number} [span = 100,] The user's span to height difference.
- * @param {number} [weight = -1,] The user's weight.
- * @param {string} [image = '',] The user's profile image.
- * @param {UserPrivacy} [privacy = 'unlisted',] Privacy setttings.
- * @returns {Promise<User | ErrorResponse>} User object or error.
+ * @param {string} displayName User's display name.
+ * @param {UserSends} max User's max sends.
+ * @param {string} email User's email.
+ * @param {string} image User's image.
+ * @param {number} started User's started climbing.
+ * @param {string} home User's home town.
+ * @param {number} height User's height.
+ * @param {number} span User's span.
+ * @param {number} age User's age.
+ * @param {string} privacy User's privacy setting.
+ * @param {string} attemptPrivacy User's attempt privacy setting.
+ * @param {string} sessionPrivacy User's session privacy setting.
+ * @param {string} interestPrivacy User's interest privacy setting.
+ * @param {string} reviewPrivacy User's review privacy setting.
+ * @param {string} ratingPrivacy User's rating privacy setting.
+ * @param {string} shoesPrivacy User's shoes privacy setting.
+ * @returns {Promise<PublicUser | ErrorResponse>} User object or error.
  */
 export const register = async (
-  name: string,
   username: string,
   password: string,
-  started = -1,
-  height = -1,
-  span = 100,
-  weight = -1,
-  image = '',
-  privacy = 'unlisted' as UserPrivacy,
-): Promise<User | ErrorResponse> => {
+  displayName: string,
+  max?: UserSends,
+  email?: string,
+  image?: string,
+  started?: number,
+  home?: string,
+  height?: number,
+  span?: number,
+  weight?: number,
+  age?: number,
+  privacy?: PrivacyStatus,
+  attemptPrivacy?: PrivacyStatus,
+  sessionPrivacy?: PrivacyStatus,
+  interestPrivacy?: PrivacyStatus,
+  reviewPrivacy?: PrivacyStatus,
+  ratingPrivacy?: PrivacyStatus,
+  shoesPrivacy?: PrivacyStatus,
+): Promise<PublicUser | ErrorResponse> => {
   try {
     const response = await request({
       method: 'POST',
       url: '/authentication/register',
-      params: {
-        name,
+      params: generateBody({
         username,
         password,
+        displayName,
+        max,
+        email,
+        image,
         started,
+        home,
         height,
         span,
         weight,
-        image,
+        age,
         privacy,
-      },
+        attemptPrivacy,
+        sessionPrivacy,
+        interestPrivacy,
+        reviewPrivacy,
+        ratingPrivacy,
+        shoesPrivacy,
+      }),
     });
 
     if (response.status === 201) {
-      return response.data.user;
+      return response.data.user as PublicUser;
     }
     return {
       status: response.status,

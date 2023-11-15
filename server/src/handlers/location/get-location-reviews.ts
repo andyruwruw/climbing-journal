@@ -41,8 +41,8 @@ export class GetLocationReviewsHandler extends Handler {
       // Retrieve parameters.
       const {
         location,
-        offset = "0",
-        limit = "50",
+        offset = '0',
+        limit = '50',
       } = req.query;
 
       // Ensure valididty of parameters.

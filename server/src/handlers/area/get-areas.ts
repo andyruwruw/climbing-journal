@@ -1,13 +1,12 @@
 // Local Imports
 import {
-  MESSAGE_INTERNAL_SERVER_ERROR,
-  MESSAGE_ITEM_MISSING,
-} from '../../config/messages';
-import {
   limitString,
   sanitizeAreaType,
+  sanitizeCursorLimit,
+  sanitizeCursorOffset,
 } from '../../config';
 import { Handler } from '../handler';
+import { MESSAGE_INTERNAL_SERVER_ERROR } from '../../config/messages';
 
 // Types
 import {
@@ -38,6 +37,8 @@ export class GetAreasHandler extends Handler {
         parent = '',
         type = '',
         username = '',
+        limit = '50',
+        offset = '0',
       } = req.query;
 
       // Prepare find query.
@@ -65,6 +66,8 @@ export class GetAreasHandler extends Handler {
         {
           name: 1,
         },
+        sanitizeCursorOffset(offset),
+        sanitizeCursorLimit(limit),
       );
 
       const areaItems = {};

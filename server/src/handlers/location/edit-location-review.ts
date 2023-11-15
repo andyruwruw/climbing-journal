@@ -19,6 +19,7 @@ import {
   ClimbingRequest,
   ClimbingResponse,
   QueryUpdate,
+  Review,
 } from '../../types';
 
 /**
@@ -111,7 +112,7 @@ export class EditLocationReviewHandler extends Handler {
       if ('rating' in req.body) {
         update.rating = sanitizeRating(rating);
       }
-      if (notes) {
+      if ('notes' in req.body) {
         update.notes = limitString(notes);
       }
 

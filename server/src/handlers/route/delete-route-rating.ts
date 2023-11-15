@@ -44,12 +44,12 @@ export class DeleteRouteRatingHandler extends Handler {
 
       // Retrieve parameters.
       const {
-        id,
+        route,
         user: username,
       } = req.query;
 
       // Ensure valididty of parameters.
-      if (!id) {
+      if (!route) {
         res.status(400).send({
           message: MESSAGE_HANDLER_PARAMETER_MISSING('id', 'route'),
         });
@@ -64,8 +64,8 @@ export class DeleteRouteRatingHandler extends Handler {
 
       // Delete by ID.
       await Handler.database.rating.delete({
-        _id: `${id}`,
-        submitted: `${username}`,
+        route: `${route}`,
+        user: `${username}`,
       });
 
       res.status(200).send({

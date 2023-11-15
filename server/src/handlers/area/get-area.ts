@@ -50,8 +50,22 @@ export class GetAreaHandler extends Handler {
         return;
       }
 
+      const promises = [
+        Handler.database.area.find({ parent: `${id}` }),
+        Handler.database.route.find({ area: `${id}` }),
+      ];
+
+      const [
+        subAreas,
+        routes,
+      ] = await Promise.all(promises);
+
       res.status(200).send({
         area: existing,
+        children: {
+          areas: subAreas,
+          routes,
+        },
       });
     } catch (error) {
       res.status(500).send({

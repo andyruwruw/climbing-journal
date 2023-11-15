@@ -8,7 +8,6 @@ import { EditLocationHandler } from './edit-location';
 import { EditLocationReviewHandler } from './edit-location-review';
 import { GetLocationHandler } from './get-location';
 import { GetLocationReviewsHandler } from './get-location-reviews';
-import { GetLocationRoutesHandler } from './get-location-routes';
 import { GetLocationsHandler } from './get-locations';
 
 export default {
@@ -19,7 +18,6 @@ export default {
   rereview: EditLocationReviewHandler,
   edit: EditLocationHandler,
   reviews: GetLocationReviewsHandler,
-  routes: GetLocationRoutesHandler,
   get: GetLocationHandler,
   gets: GetLocationsHandler,
 } as Record<string, typeof Handler>;

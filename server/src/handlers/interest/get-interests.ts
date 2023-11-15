@@ -3,6 +3,7 @@ import {
   IS_NUMBER,
   sanitizeCursorLimit,
   sanitizeCursorOffset,
+  sanitizeDate,
 } from '../../config';
 import {
   MESSAGE_HANDLER_PARAMETER_MISSING,
@@ -46,12 +47,12 @@ export class GetInterestsHandler extends Handler {
 
       // Retrieve parameters.
       const {
-        user: username,
-        date,
-        route,
-        status,
-        offset = "0",
-        limit = "50",
+        user: username = user.username,
+        date = 0,
+        route = '',
+        status = 'interested',
+        offset = '0',
+        limit = '50',
       } = req.query;
 
       // Ensure valididty of parameters.
@@ -64,16 +65,16 @@ export class GetInterestsHandler extends Handler {
 
       // Prepare find query.
       const query = {} as QueryConditions;
-      if (username) {
+      if ('user' in req.query) {
         query.user = `${username}`;
       }
-      if (date && IS_NUMBER.test(`${date}`)) {
-        query.date = parseInt(`${date}`, 10);
+      if ('date' in req.query) {
+        query.date = sanitizeDate(date);
       }
-      if (route) {
+      if ('route' in req.query) {
         query.route = `${route}`;
       }
-      if (status) {
+      if ('status' in req.query) {
         query.status = `${status}`;
       }
 

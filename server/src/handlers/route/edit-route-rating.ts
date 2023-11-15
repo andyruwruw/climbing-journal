@@ -51,28 +51,31 @@ export class EditRouteRatingHandler extends Handler {
 
       // Retrieve parameters.
       const {
-        id,
+        route,
         suggestedGrade = -2,
         suggestedSubGrade = 0,
         rating = -1,
       } = req.body;
 
       // Ensure valididty of parameters.
-      if (!id) {
+      if (!route) {
         res.status(400).send({
-          message: MESSAGE_HANDLER_PARAMETER_MISSING('id', 'rating'),
+          message: MESSAGE_HANDLER_PARAMETER_MISSING('id', 'route'),
         });
         return;
       }
 
       // Prepare find query.
-      const query = { _id: `${id}` };
+      const query = {
+        route: `${route}`,
+        user: `${user.username}`,
+      };
 
       // Find and ensure rating exists.
       const existing = await Handler.database.rating.findOne(query);
       if (existing) {
         res.status(400).send({
-          message: MESSAGE_ITEM_MISSING('rating', 'id', id),
+          message: MESSAGE_ITEM_MISSING('rating', 'route', route),
         });
         return;
       }
