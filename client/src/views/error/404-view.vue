@@ -5,14 +5,14 @@
 
 <script lang="ts">
 // Packages
-import Vue from 'vue';
 import { mapActions } from 'vuex';
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: '404View',
+  name: '404-view',
 
   created() {
-    this.handlePageLoad({ name: this.$route.name });
+    this.handlePageLoad(this.$route);
   },
 
   methods: {

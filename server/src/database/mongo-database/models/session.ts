@@ -1,9 +1,11 @@
 // Packages
-import { generateEmptyMaxSends } from '@/config';
 import {
   model,
   Schema,
 } from 'mongoose';
+
+// Local Imports
+import { generateEmptyMaxSends } from '../../../config';
 
 const schema = new Schema({
   user: {

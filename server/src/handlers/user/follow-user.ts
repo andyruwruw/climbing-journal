@@ -121,7 +121,7 @@ export class FollowUserHandler extends Handler {
         following: username,
       });
 
-      res.status(200).send({
+      res.status(201).send({
         follow,
       });
     } catch (error) {

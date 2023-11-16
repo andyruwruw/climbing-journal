@@ -44,7 +44,7 @@ const createLocation = async (
       media,
     }));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.location as Location;
     }
     return {
@@ -179,7 +179,7 @@ const editLocation = async (
   media?: Media[],
 ): Promise<Location | ErrorResponse> => {
   try {
-    const response = await request.put('/location/edit', generateBody({
+    const response = await request.post('/location/edit', generateBody({
       id,
       name,
       outdoors,
@@ -219,7 +219,7 @@ const editLocationReview = async (
   notes?: string,
 ): Promise<Review | ErrorResponse> => {
   try {
-    const response = await request.put('/location/rereview', generateBody({
+    const response = await request.post('/location/rereview', generateBody({
       location,
       rating,
       notes,

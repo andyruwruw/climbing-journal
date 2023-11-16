@@ -46,7 +46,7 @@ export const login = async (
 ): Promise<PublicUser | ErrorResponse> => {
   try {
     const response = await request({
-      method: 'PUT',
+      method: 'POST',
       url: '/authentication/login',
       params: {
         username,

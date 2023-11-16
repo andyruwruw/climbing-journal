@@ -3,12 +3,7 @@ import request, { generateBody } from './request';
 
 // Types
 import {
-  Interest,
-  InterestStatus,
-  Dictionary,
   ErrorResponse,
-  Route,
-  User,
   UserSends,
   ExternalHref,
   PrivacyStatus,
@@ -54,7 +49,7 @@ const followUser = async (username: string): Promise<Follow | ErrorResponse> => 
   try {
     const response = await request.post('/user/follow', { username });
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.follow as Follow;
     }
     return {
@@ -146,7 +141,7 @@ const editUser = async (
   shoesPrivacy?: PrivacyStatus,
 ): Promise<PublicUser | ErrorResponse> => {
   try {
-    const response = await request.put('/user/edit', generateBody({
+    const response = await request.post('/user/edit', generateBody({
       id,
       username,
       password,

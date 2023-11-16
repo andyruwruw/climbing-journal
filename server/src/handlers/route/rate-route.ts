@@ -133,7 +133,7 @@ export class RateRouteHandler extends Handler {
         route: limitString(route, 100),
       });
 
-      res.status(200).send({
+      res.status(201).send({
         rating: newRating,
       });
     } catch (error) {

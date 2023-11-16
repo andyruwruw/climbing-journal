@@ -98,7 +98,7 @@ const editSession = async (
   media?: Media[],
 ): Promise<Session | ErrorResponse> => {
   try {
-    const response = await request.put('/session/edit', generateBody({
+    const response = await request.post('/session/edit', generateBody({
       id,
       location,
       date,
@@ -339,7 +339,7 @@ const logSession = async (
       media,
     }));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.session as Session;
     }
     return {

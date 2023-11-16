@@ -62,7 +62,7 @@ const createRoute = async (
       media,
     }));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.route as Route;
     }
     return {
@@ -172,7 +172,7 @@ const editRoute = async (
   media?: Media[],
 ): Promise<Route | ErrorResponse> => {
   try {
-    const response = await request.put('/route/edit', generateBody({
+    const response = await request.post('/route/edit', generateBody({
       id,
       name,
       location,
@@ -219,7 +219,7 @@ const editRouteRating = async (
   rating?: number,
 ): Promise<Rating | ErrorResponse> => {
   try {
-    const response = await request.put('/route/rerate', generateBody({
+    const response = await request.post('/route/rerate', generateBody({
       route,
       suggstedGrade,
       suggestedSubGrade,
@@ -417,7 +417,7 @@ const rateRoute = async (
       notes,
     }));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.review as Review;
     }
     return {

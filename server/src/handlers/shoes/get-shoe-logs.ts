@@ -7,7 +7,7 @@ import {
   sanitizeDate,
   sanitizeNumber,
   sanitizeShoesStatus,
-} from '@/config';
+} from '../../config';
 import {
   convertUserToPublic,
   validate,
@@ -62,8 +62,8 @@ export class GetShoeLogsHandler extends Handler {
         status = 'New',
         resoled = false,
         resoleRubber = '',
-        offset = "0",
-        limit = "50",
+        offset = '0',
+        limit = '50',
       } = req.query;
 
       // Prepare find query.

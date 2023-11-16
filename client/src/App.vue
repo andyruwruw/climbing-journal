@@ -10,16 +10,27 @@
 
 <script lang="ts">
 // Packages
+import { mapActions } from 'vuex';
 import Vue from 'vue';
 
-// Local Imports
-import AppBar from './components/ui/app-bar/AppBar.vue';
+// Local Imports./components/ui/app-bar/app-bar.vue
+import AppBar from './components/ui/app-bar/app-bar.vue';
 
 export default Vue.extend({
   name: 'App',
 
   components: {
     AppBar,
+  },
+
+  created() {
+    this.checkUser();
+  },
+
+  methods: {
+    ...mapActions('user', [
+      'checkUser',
+    ]),
   },
 });
 </script>

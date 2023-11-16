@@ -63,7 +63,7 @@ const editInterest = async (
   notes?: string,
 ): Promise<Interest | ErrorResponse> => {
   try {
-    const response = await request.put('/interest/edit', generateBody({
+    const response = await request.post('/interest/edit', generateBody({
       id,
       date,
       route,
@@ -195,7 +195,7 @@ const logInterest = async (
       notes,
     }));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.interest as Interest;
     }
     return {

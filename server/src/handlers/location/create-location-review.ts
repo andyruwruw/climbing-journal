@@ -135,7 +135,7 @@ export class CreateLocationReviewHandler extends Handler {
         location: `${location}`,
       });
 
-      res.status(200).send({
+      res.status(201).send({
         review,
       });
     } catch (error) {

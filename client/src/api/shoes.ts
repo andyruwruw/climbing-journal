@@ -79,7 +79,7 @@ const editShoes = async (
   notes?: string,
 ): Promise<Shoes | ErrorResponse> => {
   try {
-    const response = await request.put('/shoes/edit', generateBody({
+    const response = await request.post('/shoes/edit', generateBody({
       id,
       date,
       brand,
@@ -279,7 +279,7 @@ const logShoes = async (
       notes,
     }));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.shoes as Shoes;
     }
     return {

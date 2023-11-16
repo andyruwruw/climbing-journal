@@ -7,6 +7,10 @@ import {
   convertUserToPublic,
   validate,
 } from '../../helpers/authentication';
+import {
+  sanitizeCursorLimit,
+  sanitizeCursorOffset,
+} from '../../config';
 import { Handler } from '../handler';
 
 // Types
@@ -15,7 +19,6 @@ import {
   ClimbingResponse,
   QueryConditions,
 } from '../../types';
-import { sanitizeCursorLimit, sanitizeCursorOffset } from '@/config';
 
 /**
  * Retrieves all reviews for a location.

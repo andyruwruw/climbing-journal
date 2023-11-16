@@ -65,8 +65,8 @@ export class GetSessionsHandler extends Handler {
         felt = 0,
         max = {},
         partner = '',
-        offset = "0",
-        limit = "50",
+        offset = '0',
+        limit = '50',
       } = req.query;
 
       // Prepare find query.

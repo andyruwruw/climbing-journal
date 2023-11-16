@@ -47,7 +47,7 @@ const createArea = async (
       media,
     }));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.area as Area;
     }
     return {
@@ -122,7 +122,7 @@ const editArea = async (
   media?: Media[],
 ): Promise<Area | ErrorResponse> => {
   try {
-    const response = await request.put('/area/edit', generateBody({
+    const response = await request.post('/area/edit', generateBody({
       id,
       name,
       location,

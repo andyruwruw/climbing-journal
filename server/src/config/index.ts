@@ -354,7 +354,7 @@ export const SALT_WORK_FACTOR = 12;
 /**
  * Name of the login cookie.
  */
-export const COOKIE_NAME = 'climbingjournalcookie';
+export const COOKIE_NAME = 'climb-cookie';
 
 /**
  * Regex for checking string numbers.

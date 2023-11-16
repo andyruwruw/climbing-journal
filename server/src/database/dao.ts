@@ -1,6 +1,3 @@
-// Local Imports
-import { UsedAbstractDAOError } from '../errors/used-abstract-dao-error';
-
 // Types
 import {
   QueryConditions,

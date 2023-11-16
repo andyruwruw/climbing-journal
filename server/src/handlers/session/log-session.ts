@@ -145,7 +145,7 @@ export class LogSessionHandler extends Handler {
       // Retrieve inserted session.
       const session = await Handler.database.session.findOne(data);
 
-      res.status(200).send({
+      res.status(201).send({
         session,
       });
     } catch (error) {

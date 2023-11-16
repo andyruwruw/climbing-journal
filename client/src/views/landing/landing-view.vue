@@ -5,16 +5,14 @@
 
 <script lang="ts">
 // Packages
+import { mapActions } from 'vuex';
 import Vue from 'vue';
 
-// Local Imports
-import { mapActions } from 'vuex';
-
 export default Vue.extend({
-  name: 'LandingView',
+  name: 'landing-view',
 
   created() {
-    this.handlePageLoad({ name: this.$route.name });
+    this.handlePageLoad(this.$route.name);
   },
 
   methods: {

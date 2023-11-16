@@ -18,6 +18,7 @@ import {
  * @returns {string | null} Cookie value.
  */
 export const getCookie = (req: ClimbingRequest): string | null => {
+  console.log(req.cookies);
   if (!(COOKIE_NAME in req.cookies)) {
     return null;
   }
@@ -34,6 +35,7 @@ export const attatchCookie = (
   res: ClimbingResponse,
   cookie: string,
 ): void => {
+  res.setHeader('Access-Control-Expose-Headers', 'Set-Cookie');
   res.setHeader('Set-Cookie', `${COOKIE_NAME}=${cookie}`);
 };
 

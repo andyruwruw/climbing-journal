@@ -56,17 +56,22 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/location/location-view.vue'),
   },
   {
+    path: '/location/:id/area/:area',
+    name: 'Area',
+    component: () => import('../views/location/area-view.vue'),
+  },
+  {
     path: '/profile/:id',
     name: 'Profile',
     component: () => import('../views/profile/profile-view.vue'),
   },
   {
-    path: '/route/:location/:id',
+    path: '/location/:location/route/:id',
     name: 'Route',
     component: () => import('../views/route/route-view.vue'),
   },
   {
-    path: '/session/:id',
+    path: '/profile/:user/session/:id',
     name: 'Session',
     component: () => import('../views/session/session-view.vue'),
   },
@@ -77,7 +82,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/shoes/:brand/:model/:id',
-    name: 'Shoes Log',
+    name: 'ShoesLog',
     component: () => import('../views/shoes/shoes-log-view.vue'),
   },
 ];

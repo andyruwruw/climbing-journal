@@ -6,21 +6,21 @@
 
 <script lang="ts">
 // Packages
-import Vue from 'vue';
 import { mapActions } from 'vuex';
+import Vue from 'vue';
 
 // Local Imports
-import LoginCard from './components/LoginCard.vue';
+import LoginCard from './components/login-card.vue';
 
 export default Vue.extend({
-  name: 'LoginView',
+  name: 'login-view',
 
   components: {
     LoginCard,
   },
 
   created() {
-    this.handlePageLoad({ name: this.$route.name });
+    this.handlePageLoad(this.$route.name);
   },
 
   methods: {

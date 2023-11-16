@@ -120,7 +120,7 @@ export class CreateAreaHandler extends Handler {
         location: limitString(location, 1000),
       });
 
-      res.status(200).send({
+      res.status(201).send({
         area,
       });
     } catch (error) {

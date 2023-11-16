@@ -5,7 +5,7 @@ import authentication from './authentication';
 import general from './general';
 import interest from './interest';
 import location from './location';
-import route from './route',
+import route from './route';
 import session from './session';
 import shoes from './shoes';
 import user from './user';

@@ -17,10 +17,13 @@ export const handleCors = (
   req: ClimbingRequest,
   res: ClimbingResponse,
 ): void => {
-  console.log(Environment.getOrigin());
   res.setHeader(
     'Access-Control-Allow-Origin',
     Environment.getOrigin(),
+  );
+  res.setHeader(
+    'Access-Control-Allow-Credentials',
+    'true',
   );
   res.setHeader(
     'Access-Control-Allow-Headers',

@@ -99,7 +99,7 @@ export class LogInterestHandler extends Handler {
       // Retrieve inserted interest.
       const interest = await Handler.database.interest.findOne(data);
 
-      res.status(200).send({
+      res.status(201).send({
         interest,
       });
     } catch (error) {

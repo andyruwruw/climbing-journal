@@ -6,12 +6,6 @@ import {
   MutationTree,
 } from 'vuex';
 
-/**
- * Error Module
- *
- * Global handler for errors.
- */
-
 // State interface
 export interface ErrorModuleState extends Record<string, any> {
   /**

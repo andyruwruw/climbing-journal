@@ -14,6 +14,7 @@ const ApiBaseUrl = (): string => {
  */
 const request = axios.create({
   baseURL: ApiBaseUrl(),
+  withCredentials: true,
 });
 
 /**

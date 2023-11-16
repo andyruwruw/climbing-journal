@@ -6,13 +6,13 @@ import {
 } from '../../config/messages';
 import { Handler } from '../handler';
 import { validate } from '../../helpers/authentication';
+import { overrideAdminQuery } from '../../config';
 
 // Types
 import {
   ClimbingRequest,
   ClimbingResponse,
 } from '../../types';
-import { overrideAdminQuery } from '@/config';
 
 /**
  * Deletes a shoe log.

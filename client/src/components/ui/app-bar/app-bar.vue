@@ -21,17 +21,30 @@
         @click="goToLogin">
         Login
       </v-btn>
+
+      <app-bar-profile
+        v-if="isLoggedIn" />
     </div>
   </v-app-bar>
 </template>
 
 <script lang="ts">
 // Packages
+import {
+  mapActions,
+  mapGetters,
+} from 'vuex';
 import Vue from 'vue';
-import { mapActions, mapGetters } from 'vuex';
+
+// Local Imports
+import AppBarProfile from './app-bar-profile.vue';
 
 export default Vue.extend({
-  name: 'AppBar',
+  name: 'app-bar',
+
+  components: {
+    AppBarProfile,
+  },
 
   computed: {
     ...mapGetters('user', [
@@ -75,5 +88,4 @@ export default Vue.extend({
   font-weight: bold;
   margin-left: .5rem;
 }
-
 </style>

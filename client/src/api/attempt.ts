@@ -67,7 +67,7 @@ const editAttempt = async (
   media?: Media[],
 ): Promise<Attempt | ErrorResponse> => {
   try {
-    const response = await request.put('/attempt/edit', generateBody({
+    const response = await request.post('/attempt/edit', generateBody({
       id,
       date,
       route,
@@ -210,7 +210,7 @@ const logAttempt = async (
       media,
     }));
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data.attempt as Attempt;
     }
     return {

@@ -61,6 +61,8 @@ export const validate = async (
 ): Promise<User | null> => {
   const cookie = getCookie(req);
 
+  console.log(cookie);
+
   if (!cookie || cookie === '') {
     return null;
   }

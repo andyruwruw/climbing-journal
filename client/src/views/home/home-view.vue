@@ -9,11 +9,11 @@ import Vue from 'vue';
 import { mapActions } from 'vuex';
 
 export default Vue.extend({
-  name: 'HomeView',
+  name: 'home-view',
 
   created() {
     this.requiresLogin();
-    this.handlePageLoad({ name: this.$route.name });
+    this.handlePageLoad(this.$route);
   },
 
   methods: {

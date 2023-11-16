@@ -236,10 +236,8 @@ export default Vue.extend({
           password: this.password,
         });
       } else {
-        console.log('registering');
-        console.log(this.name, this.username, this.password);
         await this.register({
-          name: this.name,
+          displayName: this.name,
           username: this.username,
           password: this.password,
         });

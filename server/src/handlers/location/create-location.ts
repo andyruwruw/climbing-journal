@@ -119,7 +119,7 @@ export class CreateLocationHandler extends Handler {
         address: limitString(address, 10000),
       });
 
-      res.status(200).send({
+      res.status(201).send({
         location,
       });
     } catch (error) {

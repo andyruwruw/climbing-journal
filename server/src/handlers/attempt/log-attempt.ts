@@ -120,7 +120,7 @@ export class LogAttemptHandler extends Handler {
       // Retrieve inserted attempt.
       const attempt = await Handler.database.attempt.findOne(data);
 
-      res.status(200).send({
+      res.status(201).send({
         attempt,
       });
     } catch (error) {

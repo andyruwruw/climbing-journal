@@ -116,7 +116,7 @@ export class LogShoesHandler extends Handler {
         updated: data.updated,
       });
 
-      res.status(200).send({
+      res.status(201).send({
         shoes,
       });
     } catch (error) {

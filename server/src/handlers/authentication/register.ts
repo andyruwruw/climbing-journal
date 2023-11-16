@@ -159,7 +159,7 @@ export class RegisterHandler extends Handler {
         token,
       );
 
-      res.status(200).send({
+      res.status(201).send({
         user: convertUserToPublic(user),
       });
     } catch (error) {

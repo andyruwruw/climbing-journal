@@ -9,7 +9,7 @@ import {
   sanitizeRouteHref,
   sanitizeRouteType,
   sanitizeSubGrade,
-} from '@/config';
+} from '../../config';
 import {
   MESSAGE_CREATE_HANDLER_DUPLICATE_ENTRY_ERROR,
   MESSAGE_HANDLER_PARAMETER_MISSING,
@@ -160,7 +160,7 @@ export class CreateRouteHandler extends Handler {
         type: sanitizeRouteType(type),
       });
 
-      res.status(200).send({
+      res.status(201).send({
         route,
       });
     } catch (error) {

@@ -26,17 +26,6 @@ export class Handler {
   _ready = false;
 
   /**
-   * Instantiates a new handler.
-   */
-  constructor() {
-    if (!Handler.database) {
-      Handler.database = getDatabase(Environment.getDatabaseType());
-    }
-
-    this._connectDatabase();
-  }
-
-  /**
    * Handles the request.
    *
    * @param {ClimbingRequest} req Incoming request.
@@ -52,7 +41,11 @@ export class Handler {
   /**
    * Connects to the database.
    */
-  async _connectDatabase(): Promise<void> {
+  async connectDatabase(): Promise<void> {
+    if (!Handler.database) {
+      Handler.database = getDatabase(Environment.getDatabaseType());
+    }
+
     try {
       if (!Handler.database.isConnected()) {
         await Handler.database.connect(
@@ -61,7 +54,11 @@ export class Handler {
           Environment.getDatabasePassword(),
         );
 
-        console.log('Database connected');
+        Monitor.log(
+          Handler,
+          'Database connected.',
+          Monitor.Layer.INFO,
+        );
       }
 
       this._ready = true;
