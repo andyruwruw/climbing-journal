@@ -2,22 +2,24 @@
   <v-app-bar
     app
     flat
-    outlined>
+    outlined
+    color="#1C1E22">
     <div :class="$style.component">
       <div :class="$style.logo">
         <img
           :class="$style.icon"
-          src="../../../assets/images/logo.png"
+          src="../../../assets/images/logo-64.svg"
           alt="#" />
 
         <span :class="$style.title">
-          Climbing Journal
+          Climbaholic
         </span>
       </div>
 
       <v-btn
         v-if="!isLoggedIn"
         outlined
+        dark
         @click="goToLogin">
         Login
       </v-btn>
@@ -66,7 +68,7 @@ export default Vue.extend({
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1500px;
   margin: 0 auto;
 }
 
@@ -80,12 +82,13 @@ export default Vue.extend({
 }
 
 .icon {
-  width: 30px;
+  width: 20px;
 }
 
 .title {
   font-family: 'Chivo', sans-serif;
-  font-weight: bold;
+  font-weight: lighter;
   margin-left: .5rem;
+  color: white;
 }
 </style>

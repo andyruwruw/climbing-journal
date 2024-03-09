@@ -15,6 +15,7 @@
         outlined
         hide-details
         dense
+        dark
         clearable />
 
       <v-text-field
@@ -26,6 +27,7 @@
         outlined
         hide-details
         dense
+        dark
         clearable />
 
       <v-text-field
@@ -38,6 +40,7 @@
         outlined
         hide-details
         dense
+        dark
         clearable />
     </div>
 
@@ -50,6 +53,7 @@
         :class="$style.action"
         :disabled="isSubmitting"
         outlined
+        dark
         @click="switchMethod">
         {{ switchLabel }}
       </v-btn>
@@ -58,8 +62,8 @@
         :class="$style.action"
         :depressed="true"
         :disabled="isDisabled"
-        :dark="!isDisabled"
         :loading="isSubmitting"
+        dark
         @click="submit">
         {{ submitLabel }}
       </v-btn>
@@ -257,8 +261,9 @@ export default Vue.extend({
   max-width: 600px;
   border-radius: 1rem;
   padding: 1.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.134);
+  border: 1px solid rgba(251, 251, 251, 0.134);
   margin-bottom: 20vh;
+  color: white;
 }
 
 .field {
